@@ -105,9 +105,9 @@ function funcMapInject( _table, _target )		--{ tMap }
 			self.eventsA = { idx = 0 } 			--POPULATE FROM AUTHORS STORIES
 			self.eventsB = { idx = 0 } 			--tMenu.menuPointerIdx WITH drawListEvents()
       self.authors = { idxA = 0, idxB = 0 } --POPULATE FROM AUTHORS DIRECTORY
-			self.sounds = {}				--PER CURRENT ROOM
-			self.images = {}				--PER CURRENT ROOM
-			self.videos = {}				--PER CURRENT ROOM
+			--self.sounds = {}				--PER-MAP USEFUL FOR USER <TAB><TAB> HELP LATER ON
+			--self.images = {}				--PER-MAP
+			--self.videos = {}				--PER-MAP
 			self.fileName = ""			--HAS FILE EXTENTION
 			--TIMING
 			self.rmDeltaTime = 0
@@ -320,9 +320,9 @@ function funcInject( _table, _target )	--{ tRetro }
       rTripWire = { idx =0 }, --RUN-ONCE THEATER ROOM TRIPWIRES ETC  rNOWtime = true,
 			rHealth = 4000,
 			rHz = 1600,							--HOW DO BUGS WORK IN 1600Hz ENVIRONMENT
-			rImage = "",						--IMAGE SOUND & VIDEO
-			rSound = "",						--ALL NOW INSIDE THE EVENT FOLDER/DIRECTORY
-			rVideo = "",
+			--rImage = "",						--IMAGE SOUND & VIDEO
+			--rSound = "",						--ALL NOW INSIDE THE EVENT FOLDER/DIRECTORY
+			--rVideo = "",
 			ONBOARD = false					--ITEM WITHIN A CONTAINER
 			}
 			if _exit then

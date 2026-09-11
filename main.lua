@@ -19,7 +19,7 @@ function love.load( arg )
   require 'source.Keyboard'
   require 'source.TA-cmds'
 	require 'source.Menus'
-	--require 'source.Sound'
+	require 'source.Sound'
 	require 'RVnumbers'
 	--fPortHoldInject MEMORY CONTAINER LOOP THROUGH SUB-FUNCTIONS
 	fPortHoleInject( tPortHole,"setGUIvars" )

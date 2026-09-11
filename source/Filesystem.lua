@@ -61,18 +61,16 @@ function listAuthors()			--love.filesystem.getSaveDirectory()
 	return _tbl
 end
 
-function listSounds( _flow, _author, _fileName ) -- _author, _fileName )
-	setAuthRootPath( _flow, _author, _fileName )
+function listSounds()
+	--setAuthRootPath( _flow, _author, _fileName )
   tMap.sounds = love.filesystem.getDirectoryItems( "Sounds/" )
 end
 
-function listImages( _flow, _author, _fileName )
-	setAuthRootPath( _flow, _author, _fileName )
+function listImages()
   tMap.images = love.filesystem.getDirectoryItems( "Images/" )
 end
 
-function listVideos( _flow, _author, _fileName )
-	setAuthRootPath( _flow, _author, _fileName )
+function listVideos()
   tMap.videos = love.filesystem.getDirectoryItems( "Videos/" )
 end
 
@@ -86,12 +84,12 @@ function setAuthRootPath( _flow, _author, _fileName )
     love.filesystem.setIdentity( "retro84/Authors/" )	--FINAL PATH
 	elseif _flow == "AU" and #_author >0 then
 		love.filesystem.setIdentity( "retro84/Authors/".. _author .."/" )
-	elseif _flow == "S" and #_author >0 and #_fileName >0 then
-		love.filesystem.setIdentity( "retro84/Authors/".. _author .."/".. _fileName .."/Sounds/" )	
-	elseif _flow == "I" and #_author >0 and #_fileName >0 then	--IMAGES / SOUNDS/ VIDEOS LIKELY WILL BE REMOVED...
-		love.filesystem.setIdentity( "retro84/Authors/".. _author .."/".. _fileName .."/Images/" )
-	elseif _flow == "V" and #_author >0 and #_fileName >0 then
-		love.filesystem.setIdentity( "retro84/Authors/".. _author .."/".. _fileName .."/Video/" )
+		--	elseif _flow == "S" and #_author >0 and #_fileName >0 then
+		--		love.filesystem.setIdentity( "retro84/Authors/".. _author .."/".. _fileName .."/Sounds/" )	
+		--	elseif _flow == "I" and #_author >0 and #_fileName >0 then
+		--		love.filesystem.setIdentity( "retro84/Authors/".. _author .."/".. _fileName .."/Images/" )
+		--	elseif _flow == "V" and #_author >0 and #_fileName >0 then
+		--		love.filesystem.setIdentity( "retro84/Authors/".. _author .."/".. _fileName .."/Video/" )
   elseif #_author >0 and #_fileName >0 then
     love.filesystem.setIdentity( "retro84/Authors/".. _author .."/".. _fileName .."/" )	--AUTHOR-NAME
   end
@@ -200,9 +198,9 @@ function eventFileLoad( _author, _fileName )
 		tRetro:rmCreate( _fileName,"R1",{ m =0, x =0, y =0, z =0 },nil )
 		tMap:ticToc( true )	--,HH:MM:SS:DD
 		tMap.hDeadTypist = _tbl
---		listSounds( "S", _author, _fileName )
---		listImages( "I", _author, _fileName )
---		listVideos( "V", _author, _fileName )
+		listSounds()
+		listImages()
+		listVideos()
 		tMap.keyLogDROPIT = true
 		return true		--FEEDS tMap.deadTYPIST
 	end

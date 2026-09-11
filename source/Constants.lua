@@ -81,5 +81,5 @@ tRetro = { libRVnums = { idx =0 ,
 	"VU25-MIA7",
 	--BL
 	"G7N3-L2H8","1306-9731",
-	--Future Forcast
+	--FF
 	"K4A6-M3X8" } }

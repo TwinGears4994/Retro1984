@@ -240,12 +240,14 @@ function love.keypressed( _word )	--WORD HELPS EXPLAIN FUNCTION FILTER
 							for a = 1, #_tw do	-- *** LOOP THROUGH NESTS ***
 								--local _BOOL = runTWaction( tMap.tw[ a ], _SUDO )	NO OBJ NO TW & NO GHOST-OBJS ANYMORE
 								if not tMap.deadTYPIST and not tPortHole.BBON then		--DEADTYPIST NEED TO BE DONE
-									if _tw[1] ~= "d" then				--FILTER DIRT FROM TW
+									if _tw[ a ][1] ~= "d" then				--FILTER DIRT FROM TW
 										local _TW = runTWaction( _tw[ a ], _SUDO )	--CMD ACTIONS AFTER TRIPWIRE
 										--WE MAY FILE SWAPOUT AND CONTINUE WITH CURRENT USER-TW ACTIONS!
 										if _TW then
 											rmTWchk( _tw[ a ] )							--RE-CODE OUR TW CHECKING
 										end
+									elseif _tw[ a ][1] == "d" then			--DIRT
+										runTWaction( _tw[ a ], _SUDO )
 									end
 								else
 									runTWaction( _tw[ a ], _SUDO )
@@ -253,11 +255,6 @@ function love.keypressed( _word )	--WORD HELPS EXPLAIN FUNCTION FILTER
 								--runTWaction( tMap.tw[ a ], _SUDO )	--CMD ACTIONS AFTER TRIPWIRE
 							end
 							--_runLOOP = runTWaction( tMap.tw, _SUDO )	--DIRT, MULTI-DIRT, R# JUMPS...
-							-- *** SEARCH FOR LEFT OVER ROOT-OBJS.count == 0 ***
---							if not tMap.deadTYPIST then
---								removeDeadCount()
---								addGhostTW()
---							end
 						end
 						-- *** KEYLOG HISTORY STORAGE ***
 						--CHECK AND SEE IF _SUDO IS USEFUL ANYMORE...?	-- not _SUDO and
