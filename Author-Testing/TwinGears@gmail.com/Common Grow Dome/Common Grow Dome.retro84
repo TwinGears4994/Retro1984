@@ -1,0 +1,46 @@
+bb
+author TwinGears@gmail.com
+rmlevel 1000
+setplayerstart R4001
+maplock false
+ccmd 
+noexits
+d d d d
+delrm r1 r-1001 r-2001 r-3001
+rmlabel 'Planter Water Run Off - Middle of Pool'
+n n n n
+delrm r-4002 r-4003 r-4004
+noexits
+rmlabel 'Plants in ClayBead Bed Channels'
+e e s e n w e s e s w n s e s s
+s s s w n e w s s w n e w s w w
+w w w n e s n w w n e s n w n n
+w n n n e s w e n n e s w e n e e
+r-4009
+rmlabel 'North East Open Pool Side Area'
+untake 'Stairways into Pool' pool stairs
+hide pool
++tw look pool TW comm false 'type enter pool or enter stairs if you want to see the fish.'
++tw enter pool TW load TwinGears@gmail.com 'Common Grow Pool' r-5023
++tw enter stairs TW load TwinGears@gmail.com 'Common Grow Pool' r-5023
+r-4019
+rmlabel 'South East Open Pool Side Area'
+untake 'Stairways into Pool' pool
+hide pool
++tw look pool TW comm false 'type enter pool or enter stairs if you want to see the fish.'
++tw enter pool TW load TwinGears@gmail.com 'Common Grow Pool' r-5014
++tw enter stairs TW load TwinGears@gmail.com 'Common Grow Pool' r-5014
+r-4029
+rmlabel 'South West Open Pool Side Area'
+untake 'Stairways into Pool' pool
+hide pool
++tw look pool TW comm false 'type enter pool or enter stairs if you want to see the fish.'
++tw enter pool TW load TwinGears@gmail.com 'Common Grow Pool' r-5017
++tw enter stairs TW load TwinGears@gmail.com 'Common Grow Pool' r-5017
+r-4039
+rmlabel 'North West Open Pool Side Area'
+untake 'Stairways into Pool' pool
+hide pool
++tw look pool TW comm false 'type enter pool or enter stairs if you want to see the fish.'
++tw enter pool TW load TwinGears@gmail.com 'Common Grow Pool' r-5020
++tw enter stairs TW load TwinGears@gmail.com 'Common Grow Pool' r-5020

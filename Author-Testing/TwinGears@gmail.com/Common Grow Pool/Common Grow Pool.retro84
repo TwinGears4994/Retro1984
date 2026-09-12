@@ -1,0 +1,129 @@
+bb
+author TwinGears@gmail.com
+rmlevel 1000
+setplayerstart 0
+maplock false
+ccmd 
+noexits
+d d d d
+delrm r1 r-1001 r-2001 r-3001
+rmlabel 'Planter Water Run Off - Middle of Pool'
+wd
+noexits
+rmlabel 'Pool - West Side'
+ne
+rmlabel 'Pool - North Side'
+se
+rmlabel 'Pool - East Side'
+sw
+rmlabel 'Pool - South Side'
+nw
+r-5004
+w n s
+rmlabel 'Pool - South West Side'
+n n
+rmlabel 'Pool - North West Side'
+e e
+rmlabel 'Pool - North East Side'
+s s
+rmlabel 'Pool - South East Side'
+w s
+r-5001
+w
+r-5002
+n
+r-5003
+e s w se n s w
+rmlabel 'Pool - South Side'
+w w w
+rmlabel 'Pool - South West Side'
+ne sw n
+rmlabel 'Pool - West Side'
+n n e nw s e n w e
+rmlabel 'Pool - North Side'
+e e s ne w e s
+rmlabel 'Pool - East Side'
+w e s s w se n s w
+rmlabel 'Pool - South Side'
+n s w w n sw e w
+r-5024
+e s w e s w
+r-5015
+s w n s
+w n
+r-5018
+w n e w
+n e
+r-5021
+n e s n e s e
+r-5036
+se se
+r-5027
+sw sw
+r-5030
+nw nw
+r-5033
+ne ne
+r-5023
+untake 'Stairway Exit' stairs
+hide stairs
++tw look stairs TW comm false 'type enter stairs to EXIT pool.'
++tw enter stairs TW load TwinGears@gmail.com 'Common Grow Dome' r-4009
+r-5014
+untake 'Stairway Exit' stairs
+hide stairs
++tw look stairs TW comm false 'type enter stairs to EXIT pool.'
++tw enter stairs TW load TwinGears@gmail.com 'Common Grow Dome' r-4019
+r-5017
+untake 'Stairway Exit' stairs
+hide stairs
++tw look stairs TW comm false 'type enter stairs to EXIT pool.'
++tw enter stairs TW load TwinGears@gmail.com 'Common Grow Dome' r-4029
+r-5020
+untake 'Stairway Exit' stairs
+hide stairs
++tw look stairs TW comm false 'type enter stairs to EXIT pool.'
++tw enter stairs TW load TwinGears@gmail.com 'Common Grow Dome' r-4039
+
+R-5006
++ 13 koi true false
+repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 90 koi 99
+repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 60 koi 99
+repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 40 koi 99
+R-5002
++ 3 crayfish true true
+repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 90 crayfish 99
+repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 60 crayfish 99
+repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 30 crayfish 99
+R-5007
++ 7 koi true false
+repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 90 koi 99
+repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 60 koi 99
+repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 40 koi 99
+
++ 10 tilapia true false
+repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove tilapia
+repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove tilapia
+repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove tilapia
+R-5017
+
+R-5030
++ 15 'small trout' true true
+repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 30 'small trout' 40
+repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 30 'small trout' 40
+repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 30 'small trout' 40
+R-5029
++ 5 'small salmon' true true
+repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 'small salmon' 50
+repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 'small salmon' 50
+repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 'small salmon' 50
+R-5028
++ 3 catfish true false
+repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove catfish 80
+repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove catfish 80
+repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove catfish 80
+R-5014
++ 10 'largemouth bass' true false
+repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 'largemouth bass'
+repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 'largemouth bass'
+repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 'largemouth bass'

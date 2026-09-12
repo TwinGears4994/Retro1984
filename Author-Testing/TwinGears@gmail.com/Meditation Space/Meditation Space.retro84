@@ -1,0 +1,33 @@
+bb
+author TwinGears@gmail.com
+ccmd put wear press push pull sit stand touch
+rmlevel 1000
+setplayerstart 0
+maplock true
+maplabel 'Meditation Time'
+rmlabel 'Golden Dust Space'
+untake 'meditation cushion' down up
+hide down up
++tw sit down TW load TwinGears@gmail.com 'Meditation Space'
++tw stand up TW load TwinGears@gmail.com EarthShip R10
+rtw timer 00:00:00:1 TW clrtxt
+rtw timer 00:00:00:1 TW comm false 'Cultivate your Qi energy for 10 minutes, type stand up when done.'
+rtw timer 00:00:00:1 TW playsound 'FriedEggs014AlmostBell.ogg'
+rtw timer 00:00:00:3 TW playsound 'BongRing002.ogg'
+rtw timer 00:10:00:0 TW clrtxt
+rtw timer 00:10:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no intentions anywhere.'
+rtw timer 00:10:00:0 TW playsound 'BassSlide7.ogg'
+rtw timer 00:20:00:0 TW clrtxt
+rtw timer 00:20:00:0 TW comm false 'Cultivate your Qi energy for 10 minutes.'
+rtw timer 00:20:00:0 TW playsound 'BongRing002.ogg'
+rtw timer 00:30:00:0 TW clrtxt
+rtw timer 00:30:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no intentions anywhere.'
+rtw timer 00:30:00:0 TW playsound 'BassSlide6.ogg'
+rtw timer 00:40:00:0 TW clrtxt
+rtw timer 00:40:00:0 TW comm false 'Cultivate your Qi energy for 10 minutes.'
+rtw timer 00:40:00:0 TW playsound 'BongRing002.ogg'
+rtw timer 00:50:00:0 TW clrtxt
+rtw timer 00:50:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no intentions anywhere.'
+rtw timer 00:50:00:0 TW playsound 'BassSlide3.ogg'
+rtw timer 01:00:00:0 TW timer 00:00:00:0
+sit down

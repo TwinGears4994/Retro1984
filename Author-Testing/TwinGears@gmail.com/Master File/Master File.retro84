@@ -1,0 +1,61 @@
+bb
+rvnum 
+author TwinGears@gmail.com
+ccmd put wear press push pull
+setplayerstart R0
+maplock false
+rmlevel 1000
+maplabel 'Master File'
+rmlabel 'Bright Room'
++ 13 'fortune cookie' 9 'green cookies' 'cookie jar'
+open 'cookie jar'
++tw look 'cookie jar' TW comm false 'The jar looks like a smiling sun, very well done Art and shows off advanced pottery skills.'
++tw look 'green cookies' TW comm true 'Once you start eating this cookie you are sure to want another.'
++tw eat 'green cookies' TW comm true 'That is my kind of cookie.'
++tw eat 'green cookies' TW comm true 'Not sure where i left my hot tea, as it would go so well with that amazing cookie.'
++tw eat 'green cookies' TW comm true 'Dama good cookie Eh, quick - back to the past! lol.'
++tw look 'fortune cookie' TW comm true 'A Qi energy power-up cookie!'
++tw eat 'fortune cookie' TW comm true '<READS>: Its all fun & games, until someone learns something. -Wavey Dave'
++tw eat 'fortune cookie' TW comm true '<READS>: The world changes when you change. -Self'
++tw eat 'fortune cookie' TW comm true '<READS>: Stay lucid with-in this dream you called the world. -Self'
++tw eat 'fortune cookie' TW comm true '<READS>: Your energy precedes you. -Self'
++tw eat 'fortune cookie' TW comm true '<READS>: Your resonance precedes you. -Self'
++tw eat 'fortune cookie' TW comm true '<READS>: You world view is about to change. -Self'
++tw eat 'fortune cookie' TW comm true '<READS>: There is no failure, only experience. -Dad'
++tw eat 'fortune cookie' TW comm true '<READS>: You can not be faster than you are accurate. -Dad'
++tw eat 'fortune cookie' TW comm true '<READS>: Pick any friend and remove a negative program from their energy body regardless of the source. -Dad'
++tw eat 'fortune cookie' TW comm true '<READS>: Holy Qi packing energy cookie treat that was good!'
++tw eat 'fortune cookie' TW comm true '<READS>: Is this your nightmare because i do not recognize it? Go ahead look at your CMDS again with history <UP> & <DOWN> arrows.'
++tw eat 'fortune cookie' TW comm true '<READS>: If its not your experience, its not your truth. -Tom Campbell'
++tw eat 'fortune cookie' TW comm true '<READS>: Experience is everything. -Self'
+fill 'cookie jar' 8 'green cookies' 12 'fortune cookie'
++tw eat 'fortune cookie' TW timer 00:00:02:0 TW load TwinGears@gmail.com EarthShip r9
++tw eat 'green cookies' TW timer 00:00:02:0 TW load TwinGears@gmail.com EarthShip r10
+close 'cookie jar'
+take 'cookie jar'
+rtw timer 00:00:14:0 TW comm false 'i am heading over to the EarthShip...'
+rtw timer 00:00:15:0 TW load TwinGears@gmail.com 'EarthShip' R1
+
++ tablet
++ EarthShip 0C18-DE38 F015-EEBF DF76-C79F
+fill tablet EarthShip 0C18-DE38 F015-EEBF DF76-C79F
++tw touch tablet 0 TW load TwinGears@gmail.com EarthShip R1
++tw touch tablet 1 TW load TwinGears@gmail.com 0C18-DE38 R1
++tw touch tablet 2 TW load TwinGears@gmail.com F015-EEBF R1003
++tw touch tablet 3 TW load TwinGears@gmail.com DF76-C79F R1
++tw look tablet TW comm false 'After you have done with Remote Viewing a target 1. 0C18-DE38 or 2. F015-EEBF or 3. DF76-C79F, just simply type touch tablet 0-3, to get at the evidentual data. touch OBJ 0(Zero) will return you to the EarthShip Map.'
++tw open tablet TW comm false 'After you have done with Remote Viewing a target 1. 0C18-DE38 or 2. F015-EEBF or 3. DF76-C79F, just simply type touch tablet 0-3, to get at the evidentual data. touch OBJ 0(Zero) will return you to the EarthShip Map.'
+take tablet
+hide tablet
++ tablet2
++ EarthShip 2066-1F3D 1FC3-F386 2EB0-260E
+fill tablet2 EarthShip 2066-1F3D 1FC3-F386 2EB0-260E
++tw touch tablet2 0 TW load TwinGears@gmail.com EarthShip R1
++tw touch tablet2 1 TW load TwinGears@gmail.com 2066-1F3D R1
++tw touch tablet2 2 TW load TwinGears@gmail.com 1FC3-F386 R1
++tw touch tablet2 3 TW load TwinGears@gmail.com 2EB0-260E R1
+take tablet2
+hide tablet2
++ DEW-turd
++tw look DEW-turd TW comm false 'If only the SATANIC-DEW-tards would grow up even just a little bit! The world would never have seen such a shinny crooked & polished Trophy other wise. So this was just an introduction to a lot more data if you are willing to see it.'
+hide DEW-turd
