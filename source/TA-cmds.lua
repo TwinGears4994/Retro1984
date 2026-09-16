@@ -119,16 +119,18 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 			end
 		elseif isPlayCMD( _tblKeylog[ iKey ] ) then
 			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "pcmd", _iCmdCtl, _ccTbl[1] )		--PLAY CMD FOUND
-		elseif _CCMD then-- isCustomCMD( _tblKeylog[ iKey ] ) then
+		elseif _CCMD then		-- isCustomCMD( _tblKeylog[ iKey ] ) then
 			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "ccmd", _iCmdCtl, _ccTbl[1] )		--CUSTOM CMD FOUND
 		elseif isTime( _tblKeylog[ iKey ] ) then
-			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], ":", _iCmdCtl, _ccTbl[1] )				--REPRESENTS TIME FOUND
-		elseif isNum( _tblKeylog[ iKey ] ) then							--NUMBER FOUND
-			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "#", _iCmdCtl, _ccTbl[1] )				
-		elseif isDIRT( _tblKeylog[ iKey ] ) then							--NNN & N3 WORKS AS 3rd NORTH EXIST
+			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], ":", _iCmdCtl, _ccTbl[1] )			--REPRESENTS TIME FOUND
+		elseif isNum( _tblKeylog[ iKey ] ) then																		--NUMBER FOUND
+			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "#", _iCmdCtl, _ccTbl[1] )		
+		elseif isSoundFile( _tblKeylog[ iKey ] ) then																		--SOUND FILE MATCH FOUND
+			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "sound", _iCmdCtl, _ccTbl[1] )	
+		elseif isDIRT( _tblKeylog[ iKey ] ) then																	--NNN & N3 WORKS AS 3rd NORTH EXIST
 			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "dirt", _iCmdCtl, _ccTbl[1] )		--DIRECTION TO TRAVEL
 		elseif isBOOL( _tblKeylog[ iKey ] ) then
-			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "&", _iCmdCtl, _ccTbl[1] )				--BOOL FOUND
+			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "&", _iCmdCtl, _ccTbl[1] )			--BOOL FOUND
 			--elseif isDice( _tblKeylog[ iKey ] ) then
 			--sortTW( _tblKeylog[ iKey ], "x", _iCmdCtl )				--DICE ROLL FOUND
 		else
@@ -137,7 +139,7 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 			if _onAU then _tblKeylog[ iKey ] = _labelAu end
 			local _inRM, _iRm, _labelRm = tRetro:objRmEXISTS( _tblKeylog[ iKey ] )
 			if _inRM then _tblKeylog[ iKey ] = _labelRm end
-			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "obj", _iCmdCtl, _ccTbl[1] )			--OBJECT FOUND AS FALL-BACK TO ALL OTHERS FAILED
+			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "obj", _iCmdCtl, _ccTbl[1] )		--OBJECT FOUND AS FALL-BACK TO ALL OTHERS FAILED
 		end
 		--return true
 	end
@@ -211,9 +213,9 @@ function setTW( _tw, _cmd )										--INSERT TRIPWIRE INTO TARGET OBJ OR ROOM
 		elseif _cmd == "++tw" then			--OBJECT ON-PERSON
 			local _onAU, _iAu = tRetro:objAuEXISTS( _tw[ _iObj ] )
 			if _onAU then table.insert( tMap.auLeg[ _iAu ].tripWire, _tw ) end
-		elseif _cmd == "rtw" then		--NON-OBJECT TARGET
-			table.insert( tMap.rms[ _idx ].rTripWire, _tw )
 		end
+	elseif _cmd == "rtw" then		--NON-OBJECT TARGET
+		table.insert( tMap.rms[ _idx ].rTripWire, _tw )
 	end
 end
 
@@ -221,7 +223,7 @@ end
 function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatch","RmObjTimer","AuObjTimer",	"Typed" USED LIKE BOOL
 	--tMap.keyLogDROPIT = true
 	local _idx = 1
-	local _iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime,_iBool = 0,0,0,0,0,0,0,0,0	--, _iObj2
+	local _iB,_iP,_iC, _iD,_iR, _iNum,_iObj,_iTime, _iSound,_iBool = 0,0,0, 0,0, 0,0,0, 0,0	--, _iObj2
 	local _bCMD,_pCMD,_cCMD = false, false, false
 	local _buildMODE = tPortHole.BBON
 	local _trigger = nil
@@ -237,11 +239,11 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 	if _buildMODE then	--WHAT MIGHT EXIST UPON FILE LOADING BUT ISN'T REQUIRED FOR FILE USE
 		_SUDO = true		--AUTO BUILD MODE
 	end
-	_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _bCMD,_pCMD,_cCMD, _cmd, _idx = idxEccoCmdControl( _tw, _idx )
+	_iB,_iP,_iC, _iD,_iR, _iNum,_iObj,_iTime, _iSound,_iBool, _bCMD,_pCMD,_cCMD, _cmd, _idx = idxEccoCmdControl( _tw, _idx )
 	local _onAU, _inRM, _i, _label = false, false, 0, nil
 	--CLONE COMPLEXITY MOVED UP HERE WILL HELP OTHER COMPLICATED CMDS...
-	local _NUM, _OBJ, _DIRT, _RM, _TIME = false, false, false, false, false
-	local _num, _obj, _dirt, _rmNum, _time = nil, nil, nil, nil, nil
+	local _NUM, _OBJ, _DIRT, _RM, _TIME, _SOUND = false, false, false, false, false, false
+	local _num, _obj, _dirt, _rmNum, _time, _sound = nil, nil, nil, nil, nil, nil
 	if _iNum > 0 then
 		_num = tonumber( _tw[ _iNum ] )
 		_NUM = true
@@ -262,6 +264,10 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 		_time = _tw[ _iTime ]
 		_TIME = true
 	end
+	if _iSound >0 then
+		_sound = _tw[ _iSound ]
+		_SOUND = true
+	end
 	---------------------------------------------------------
 	-- JUMP ABOUT MAPING LOGIC (Dirt/Room)
 	---------------------------------------------------------
@@ -276,10 +282,10 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 					tRetro:switchRoom( _mapB )
 				end
 			end
-			if ( _iD < _iR and _iD ~=0 ) or _iR == 0 then
-				_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iD )
+			if ( _iD < _iR and _iD ~=0 ) or _iR == 0 then --_iB,_iP,_iC, _iD,_iR, _iNum,_iObj,_iTime, _iSound,_iBool, _bCMD,_pCMD,_cCMD, _cmd, _idx
+				_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iD )
 			elseif ( _iR < _iD and _iR ~= 0 ) or _iD == 0 then
-				_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
+				_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
 			end
 		end
 		tMap:ticToc( true, "00:00:00:0" )		--MAY NEED TO REM-OUT
@@ -292,14 +298,14 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 		--tMap.keyLogDROPIT = true
 		if _cmd == "samecmd" then
 			local _tbl = {}
-			_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, 1 )
+			_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, 1 )
 			while _iP >0 or _iC >0 do
 				if _iP ~= 0 then						--PLAY CMDS LISTED TO GO 1st
 					table.insert( _tbl, _tw[ _iP ] )
-					_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iP )
+					_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iP )
 				elseif _iC ~= 0 then				--CUSTOM CMDS NEXT UP
 					table.insert( _tbl, _tw[ _iC ] )
-					_iB,_iP,_iC,_iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iC )
+					_iB,_iP,_iC,_iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iC )
 				end
 			end
 			if #_tbl > 0 then
@@ -307,9 +313,9 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 				tMap.same.CMD = true
 			end
 		elseif _cmd == "playsound" then
-			while _iObj ~= 0 do
-				playSound( _tw[ _iObj ] )
-				_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
+			while _iSound ~= 0 do
+				playSound( _tw[ _iSound ] )
+				_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iSound )
 			end
 			return false	--AVOID .keylogDROPIT & NO GHOSTING NEEDED THUS FALSE
 		elseif _cmd == "clrtxt" or  _cmd == "cleartext" then
@@ -589,7 +595,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 							end
 						end
 					end	
-					_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iNum )	
+					_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound, _iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iNum )	
 
 					if _iNum > 0 then
 						_num = tonumber( _tw[_iNum] )
@@ -611,7 +617,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 					elseif _onAU then
 						table.insert( tMap.auLeg[ _i ].oBag, _tbl )
 					end
-					_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
+					_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound, _iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
 				end
 			end
 			return false	--AVOID .keylogDROPIT & NO GHOSTING NEEDED THUS FALSE
@@ -668,7 +674,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 						end
 						_EXISTS = true
 					elseif _tbl.rRoomNum then									--MULTIVERSE-DIRT DIRECTION
-						_iB,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_,_, _idx = idxEccoCmdControl( _tw, _idx )
+						_iB,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_,_, _idx = idxEccoCmdControl( _tw, _idx )
 						if _iB >0 and _tw[ _iB ] == "+m" then
 							--_EXISTS, _map4D2, idx, _rRoomNum
 							_isMAP4D, _tbl, _i4D = tRetro:nextRoomMap4D( _tbl, _tw[ _iB ] )--, _rmExitNum )
@@ -717,7 +723,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 			elseif string.find( _tw[1], "bo", 1 ) then				--JOIN OBJECTS
 				--WE ARE MAKING STORAGE CHANGES TO ALL ROOMS THAT APPLY OR OBJS
 				while _iObj > 0 do							--OBJECT LOOP - DUMP
-					_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
+					_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
 					_objSrc = _tw[ _iObj ]
 				end
 
@@ -737,7 +743,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 					_masterLayer = tMap.rms[ _iRm ].rLandLayer
 					_masterLabel = tMap.rms[ _iRm ].rLabel
 					_masterRM = true
-					_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR or _iNum )
+					_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR or _iNum )
 					while _iR > 0 do		--ADD OTHER R#
 						if _iR > 0 then
 							_EXISTS,_,_, _iRm = isRmInSTORY( _tw[ _iR ] )
@@ -746,7 +752,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 								table.insert( _rmsEXIST, string.match( _tw[ _iR ], "-%d+" ) or string.match( _tw[ _iR ], "%d+" ) )	--R# MASTER ROOM EXISTS	_tw[ _iR ]
 							end	
 						end
-						_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR or _iNum )
+						_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR or _iNum )
 					end
 					if #_rmsEXIST > 1 then														--CHECK EVERY ROOM IN MAP
 						for iWalk =1, #tMap.rms do										--WALK THE MAP
@@ -794,17 +800,17 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 					_MOVES = false
 				end
 				if _iNum + 1 == _iObj and _iNum ~= 0 then
-					runCmdObj( _cmd, _tw[ _iNum ], _tw[ _iObj ], nil, _MOVES, _MOVEUD )
-					_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj or _iNum )
+					runCmdObj( _cmd, _tw[ _iNum ], _tw[ _iObj ], nil, _MOVES, _MOVEUD, _sound )
+					_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj or _iNum )
 				elseif _iObj ~= 0 then
-					runCmdObj( _cmd, 1, _tw[ _iObj ], nil, _MOVES, _MOVEUD )
-					_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
+					runCmdObj( _cmd, 1, _tw[ _iObj ], nil, _MOVES, _MOVEUD, _sound )
+					_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
 				elseif _iR ~= 0 then
 					tRetro:rmDel( _tw[ _iR ] )		--DELETE ROOMS
-					_,_,_,_iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
+					_,_,_,_iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
 				elseif _iD ~= 0 and ( _cmd == "-exits" or _cmd == "delexits" ) then
 					tMap.rms[ tMap.rms.idx ].rExits = tRetro:rmDelExit( tMap.rms[ tMap.rms.idx ].rExits, _tw[ _iD ] )		--DELETE EXITS
-					_,_,_,_iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iD )
+					_,_,_,_iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iD )
 				elseif  _cmd == "+exits" then
 					local _exit = nil
 					if _iD > 0 and _iNum > 0 then
@@ -817,9 +823,9 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 						return false
 					end
 					tMap.rms[ tMap.rms.idx ].rExits = tRetro:rmAddExit( tMap.rms[ tMap.rms.idx ].rExits, _exit )		--ADD EXITS
-					_,_,_,_iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iD )
+					_,_,_,_iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iD )
 				end
-				--_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _bCMD,_pCMD,_cCMD, _cmd, _idx
+				--_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _iSound, _bCMD,_pCMD,_cCMD, _cmd, _idx
 			end
 			return false
 		elseif _cmd == "rtw" or _cmd == "+rtw"		--"+rtw" IS FOR TW INJECTION INTO MANY OR ALL OF MAP!
@@ -829,7 +835,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 			return false
 		elseif ( _cmd == "olabel" or _cmd == "rename"  ) then
 			local _iObj2 = nil
-			_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
+			_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
 			if _iNum +1 == _iObj2 and _iNum ~= 0 then		--#+1 == OBJECT
 				tRetro:objRename( _tw[ _iObj ], _tw[ _iNum ], _tw[ _iObj2 ] )
 			elseif _iNum == 0 and _iObj2 > 0 then					--NO #=0 OBJ >0
@@ -958,7 +964,8 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 			local _iTime2 = 0
 			local _cmd2 = nil
 			local _trim = string.find( _tw[1],"T", 1 ) or 0
-			_,_,_, _,_, _,_iObj, _iTime2,_, _,_,_, _, _idx = idxEccoCmdControl( _iTime +1, _idx )
+			--_iB,_iP,_iC, _iD,_iR, _iNum,_iObj,_iTime, _iSound,_iBool, _bCMD,_pCMD,_cCMD, _cmd, _idx
+			_,_,_, _,_, _,_iObj,_iTime2, _iSound,_, _,_,_, _, _idx = idxEccoCmdControl( _iTime +1, _idx )
 			if _cmd == "timer" and _iTime ~= 0 then
 				local _isTIME, _hour, _min, _sec, _dec = isTime( _tw[ _iTime ] )
 				if _iObj ~= 0 then
@@ -997,10 +1004,10 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 				end
 				return true
 			elseif _cmd == "timer" and _iTime == 0 then
-				
+				fu = nil
 			end
 			return false	--AVOID .keylogDROPIT & NO GHOSTING NEEDED THUS FALSE
-			--_,_,_, _,_, _,_, _iTime,_iBool, _,_,_, _, _ = idxEccoCmdControl( _tw, _idx )
+			--_,_,_, _,_, _,_, _iTime, _iSound,_iBool, _,_,_, _, _ = idxEccoCmdControl( _tw, _idx )
 			--fu = nil
 		end
 		tMap.keyLogDROPIT = true
@@ -1089,7 +1096,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 			_objA = _tw[ _iObj ]
 			local _scrTbl, _dstTbl = nil, nil				--fridge, eggs
 			local _num = 1
-			_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, math.max( _iC, _iP ) +1 )
+			_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, math.max( _iC, _iP ) +1 )
 			while _idx ~= 0 and _idx <= #_tw do	--[1]											--LOOP THROUGH THE TRIPWIRE
 				if _iNum + 1 == _iObj then
 					_num = _tw[ _iNum ] or 1
@@ -1144,12 +1151,12 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 						_scrTbl, _dstTbl = tRetro:moveItem( false, _scrTbl, _dstTbl, _num, _cmd )
 					end
 				end
-				_,_,_, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
+				_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iObj )
 			end
 			return false													--IF TRUE THEN WE LOOSE OUR LEFT OVER COUNT
 		elseif ( _cmd == "eat" or _cmd == "drink" or _cmd == "consume" or _cmd == "take" or _cmd == "drop" or _cmd == "place" ) then
 			local _obj2 = nil -- Internal check
-			_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _bCMD,_pCMD,_cCMD, _, _idx = idxEccoCmdControl( _tw, 1 )
+			_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _bCMD,_pCMD,_cCMD, _, _idx = idxEccoCmdControl( _tw, 1 )
 			if _cCMD then
 				if _iC +1 <= #_tw then		--"from" or _cmd2 == "with" or _cmd2 == "of" or _cmd2 == "into"
 					_obj2 = _tw[ _iC +1 ]
@@ -1157,12 +1164,13 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 			end
 			while _idx ~= 0 do
 				if _iNum + 1 == _iObj and _iNum ~= 0 then
-					runCmdObj( _cmd, _tw[ _iNum ], _tw[ _iObj ], _obj2 )
+					--( _cmd, _num, _objA, _objB, _MOVES, _MOVEUD, _sound )
+					runCmdObj( _cmd, _tw[ _iNum ], _tw[ _iObj ], _obj2, false, false, _sound )
 				else
-					runCmdObj( _cmd, 1, _tw[ _iObj ], _obj2 )
+					runCmdObj( _cmd, 1, _tw[ _iObj ], _obj2, false, false, _sound )
 				end
 				if _iC >0 and _idx == _iC then return true end	--CUT OFF
-				_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _bCMD,_pCMD,_cCMD, _cmd2, _idx = idxEccoCmdControl( _tw, _iObj )
+				_iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _bCMD,_pCMD,_cCMD, _cmd2, _idx = idxEccoCmdControl( _tw, _iObj )
 			end
 			removeDeadCount()
 			return true
@@ -1346,6 +1354,8 @@ function allTWtimerChk()				--CHECK RUN ROOM & OBJS TRIPWIRE TIMERS
 				and _currentTime == tPortHole.ghosts[ _iInRm ].rTripWire[ iTW ][3] then	--trimFwdTW(  tPortHole.ghosts.rTripWire[ iRm ][3] ) then
 					tMap.oMoveRm = iRm
 					_bFLAG = trimFwdTW( tPortHole.ghosts[ _iInRm ].rTripWire[ iTW ] )
+--					if _bFLAG and tPortHole.ghosts[ _iInRm ].rTripWire[ iTW ].MOVES then		--PLAY SOUND OBJ IF IT EXISTS
+--					end
 --				else	--NON-TIMER USER TYPED
 				end
 			end		-- *** NESTED TW TIMING! THAT'S WHERE MILK CAN GO BAD IN FRIDGE AND OUTSIDE OF FRIDGE ***
@@ -1358,6 +1368,10 @@ function allTWtimerChk()				--CHECK RUN ROOM & OBJS TRIPWIRE TIMERS
 					and _currentTime == tPortHole.ghosts[ iRm ].rObj[ iObj ].tripWire[ iTW ][3] then	--trimFwdTW(  tPortHole.ghosts.rTripWire[ iRm ][3] ) then
 						tMap.oMoveRm = iRm
 						_bFLAG = trimFwdTW( tPortHole.ghosts[ iRm ].rObj[ iObj ].tripWire[ iTW ] )
+						if _bFLAG and tPortHole.ghosts[ iRm ].rObj[ iObj ].MOVES 
+						and tPortHole.ghosts[ iRm ].rObj[ iObj ].sound ~= "" then		--PLAY SOUND OBJ IF IT EXISTS
+							playSound( tPortHole.ghosts[ iRm ].rObj[ iObj ].sound )
+						end
 					end
 				end
 			end
@@ -1371,6 +1385,9 @@ function allTWtimerChk()				--CHECK RUN ROOM & OBJS TRIPWIRE TIMERS
 					and tMap.auLeg[ _iObj ].tripWire[ iTW ][2] == "timer"
 					and _currentTime == tMap.auLeg[ _iObj ].tripWire[ iTW ][3] then
 						_bFLAG = trimFwdTW( tMap.auLeg[ _iObj ].tripWire[ iTW ] )
+						if _bFLAG and tMap.auLeg[ _iObj ].MOVES and tMap.auLeg[ _iObj ].sound ~= "" then		--PLAY SOUND OBJ IF IT EXISTS
+							playSound( tMap.auLeg[ _iObj ].sound )
+						end
 					end
 				end
 			end			
@@ -1431,7 +1448,17 @@ end
 		end
 		return false
 	end
-
+	
+	function isSoundFile( _word )
+		--if #tMap.sounds >0 then
+			for a =1, #tMap.sounds do
+				if _word == tMap.sounds[ a ] then
+					return true
+				end
+			end
+		return false
+	end
+	
 	function isPlayCMD( _word )
 		if not string.match( _word, "%d+" ) and #tRetro.playCmds >0 then				-- 4 == PLAY MODE ALWAYS PROCESSES
 			for b =1, #tRetro.playCmds do
@@ -1647,7 +1674,7 @@ end
 	end
 
 	function idxEccoCmdControl( _tw, _idx )
-		local _iB,_iP,_iC, _iD,_iR, _iNum,_iObj,_iTime, _iBool = 0,0,0, 0,0, 0,0, 0,0	--_iObj2
+		local _iB,_iP,_iC, _iD,_iR, _iNum,_iObj,_iTime, _iSound, _iBool = 0,0,0, 0,0, 0,0,0, 0,0	--_iObj2
 		local _cmd = ""
 		local _bCMD, _pCMD, _cCMD = false, false, false
 		local _iCmdHigh = 0
@@ -1663,7 +1690,9 @@ end
 		_iR = notSunCycle( _iR )
 		_iTime = string.find( _tw[1],":", _idx ) or 0	--TIME NO LONGER A NUMBER
 		_iTime = notSunCycle( _iTime )
-
+		_iSound = string.find( _tw[1],"s", _idx ) or 0
+		_iSound = notSunCycle( _iSound )
+		
 		_iObj = string.find( _tw[1],"o", _idx ) or 0	--ZERO OTHER WISE MATH.MAX PICKS UP THE FALLBACK
 		_iObj = notSunCycle( _iObj )
 		_iNum = string.find( _tw[1],"#", _idx ) or 0
@@ -1686,7 +1715,7 @@ end
 			_bCMD = true
 			_iCmdHigh = _iB
 		end
-		return _iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _iBool, _bCMD,_pCMD,_cCMD, _cmd, math.max( _iCmdHigh, _iD,_iR, _iNum,_iObj, _iTime )
+		return _iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _iSound, _iBool, _bCMD,_pCMD,_cCMD, _cmd, math.max( _iCmdHigh, _iD,_iR, _iNum,_iObj, _iTime )
 	end
 
 	function twReNameWalk( _tbl, _oldLabel, _newLabel  )	-- *** UPDATE OBJ LABEL IN ALL TWS ***
@@ -1725,7 +1754,7 @@ end
 	--	end
 	--end
 	function moveObjInMap( _tw )		--tRetro:moveItem( _bNEST, _scrTbl, _dstTbl, _count, _cmd )
-		local _iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime,_iBool, _bCMD,_pCMD,_cCMD, _cmd, _idx = idxEccoCmdControl( _tw, 1 )
+		local _iB,_iP,_iC, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _bCMD,_pCMD,_cCMD, _cmd, _idx = idxEccoCmdControl( _tw, 1 )
 		--LOOP ENTIRE MAP AND CALL EVERY OBJECT WITHOUT LEADING TW CMD!
 		local _iNum2 = 0
 		local _ = 0
@@ -1841,18 +1870,18 @@ end
 		end
 	end
 
-	function runCmdObj( _cmd, _num, _objA, _objB, _MOVES, _MOVEUD )	--
+	function runCmdObj( _cmd, _num, _objA, _objB, _MOVES, _MOVEUD, _sound )	--
 		local _bFLAG = false
 		local _UNTAKE = false
 		if _objB then
 			local _obj2CMD = isCustomCMD( _objB ) or isBuildCMD( _objB ) or isPlayCMD( _objB )
 		end
 		if _cmd == "+" or _cmd == "create" then							--IN-ROOM
-			_bFLAG = tRetro:objCrt( _objA, tonumber( _num ), _UNTAKE, "inRM", _MOVES, _MOVEUD )	--NO # FALLS BACK TO 1
+			_bFLAG = tRetro:objCrt( _objA, tonumber( _num ), _UNTAKE, "inRM", _MOVES, _MOVEUD, _sound )	--NO # FALLS BACK TO 1
 		elseif _cmd == "++" or _cmd == "+create" then				--ON-AUTHOR
-			_bFLAG = tRetro:objCrt( _objA, tonumber( _num ), false, "onAU", _MOVES, _MOVEUD )
+			_bFLAG = tRetro:objCrt( _objA, tonumber( _num ), false, "onAU", _MOVES, _MOVEUD, _sound )
 		elseif _cmd == "untake" or _cmd == "notake" then
-			_bFLAG = tRetro:objCrt( _objA, tonumber( _num ), true, "inRM", _MOVES, _MOVEUD )
+			_bFLAG = tRetro:objCrt( _objA, tonumber( _num ), true, "inRM", _MOVES, _MOVEUD, _sound )
 		elseif _cmd == "hide" then
 			tRetro:objHide( _objA, true )				--.objHIDDEN true IF IT EXISTS
 		elseif _cmd == "unhide" then

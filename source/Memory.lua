@@ -105,9 +105,9 @@ function funcMapInject( _table, _target )		--{ tMap }
 			self.eventsA = { idx = 0 } 			--POPULATE FROM AUTHORS STORIES
 			self.eventsB = { idx = 0 } 			--tMenu.menuPointerIdx WITH drawListEvents()
       self.authors = { idxA = 0, idxB = 0 } --POPULATE FROM AUTHORS DIRECTORY
-			--self.sounds = {}				--PER-MAP USEFUL FOR USER <TAB><TAB> HELP LATER ON
-			--self.images = {}				--PER-MAP
-			--self.videos = {}				--PER-MAP
+			self.sounds = {}				--PER-MAP USEFUL FOR USER <TAB><TAB> HELP LATER ON & CCMD STRUCTURE
+			self.images = {}				--PER-MAP
+			self.videos = {}				--PER-MAP
 			self.fileName = ""			--HAS FILE EXTENTION
 			--TIMING
 			self.rmDeltaTime = 0
@@ -245,6 +245,7 @@ function funcInject( _table, _target )	--{ tRetro }
 			"rmlabel",
 			"olabel",
 			"omove",								--GIVE TWs THE ABILITY TO HAVE ROOM OBJS MOVE ROOMS ETC
+			"osound",								--ASSIGN A SOUND FILENAME TO OBJECT
 			"rename",
 			"save",									--LOAD SHOULD BE PLAY CMD
 			"+m","-m",							--CREATE A PARALLEL ROOM OF TARGET/LOCAL ROOM
@@ -576,7 +577,7 @@ function funcInject( _table, _target )	--{ tRetro }
 		end
 		-- *** CMDS & OBJECTS ***
   elseif _target == "objCrt" then  --CREATE OBJECT OnPerson
-    function _table:objCrt( _obj, _count, _unTAKE, _flow, _MOVES, _MOVEUD )
+    function _table:objCrt( _obj, _count, _unTAKE, _flow, _MOVES, _MOVEUD, _sound )
 			local _onAU, _iObj = self:objAuEXISTS( _obj )
 			local _inRM, _iRm = self:objRmEXISTS( _obj )
 			local _bTBL = false
@@ -610,7 +611,8 @@ function funcInject( _table, _target )	--{ tRetro }
 					health = 4000,										--MAX CHARGE
 					Hz = 8,														--OTHERS MIGHT THINK LEVELS
 					image = "", 											--NOT LIKELY TO LAST AFTER TW CONNECTS OF THIS ARE RUNABLE
-					sound = "",
+					sound = _sound or "",
+					video = "",
 					MOVES = _MOVES or false,					--OBJECT CAN MOVE
 					MOVEUD = _MOVEUD or false,				--OBJECT CAN MOVE UP AND DOWN ROOMS
 					ONBOARD = false,									--ROOMS NOW INSIDE OBJECT FLAG
@@ -631,7 +633,7 @@ function funcInject( _table, _target )	--{ tRetro }
     end
 	elseif _target == "objCrtInObj" then
 		--OBJ CARRIES OBJ IN .oOpen = {}
-		function _table:objCrtInObj( _objA, _count, _objB )	--FOCUSED ON OBJ-B
+		function _table:objCrtInObj( _objA, _count, _objB, _sound )	--FOCUSED ON OBJ-B
 			local _idx = tMap.rms.idx
 			local _zeroOut = 0																--math.min() or .max()
 			local _BonAUN, _BiAuN, _,			_AonAU, _AiAu = self:objAuEXISTS( _objB, _objA )	--NOT USING "s" FEEDBACK HERE
@@ -645,6 +647,7 @@ function funcInject( _table, _target )	--{ tRetro }
 			local _tbl = {}								--CLONE OBJ2 TABLE
 			if _AonAU and ( _BonAU and not tMap.auLeg[ _BiAu ].objUNTAKE ) then
 				_zeroOut = tMap.auLeg[ _BiAu ].count - _count
+				if _sound then tMap.auLeg[ _BiAu ].sound = _sound end
 				if _BonAUN then							--NESTED
 					if _zeroOut <= 0 then
 						tMap.auLeg[ _AiAu ].oBag[ _BiAuN ].count = 
@@ -670,6 +673,7 @@ function funcInject( _table, _target )	--{ tRetro }
 			--A-AU & B-RM SPLIT NEST
 			elseif _AonAU and ( _BinRM and not tMap.rms[ _idx ].rObj[ _BiRm ].objUNTAKE ) then
 				_zeroOut = tMap.rms[ _idx ].rObj[ _BiRm ].count - _count
+				if _sound then tMap.rms[ _idx ].rObj[ _BiRm ].sound = _sound end
 				if _BonAUN then			--NESTED
 					if _zeroOut <= 0 then
 						tMap.auLeg[ _AiAu ].oBag[ _BiAuN ].count =
@@ -695,6 +699,7 @@ function funcInject( _table, _target )	--{ tRetro }
 			--A-RM & B-AU SPLIT NEST
 			elseif _AinRM and ( _BonAU and not tMap.rms[ _idx ].rObj[ _BiRm ].objUNTAKE ) then
 				_zeroOut = tMap.auLeg[ _BiAu ].count - _count
+				if _sound then tMap.auLeg[ _BiAu ].sound = _sound end
 				if _BinRMN then			--NESTED
 					if _zeroOut <= 0 then
 						tMap.rms[ _idx ].rObj[ _AiRm ].oBag[ _BiRmN ].count =
@@ -720,6 +725,7 @@ function funcInject( _table, _target )	--{ tRetro }
 			--A-RM & B-RM SPLIT NEST
 			elseif _AinRM and ( _BinRM and not tMap.rms[ _idx ].rObj[ _BiRm ].objUNTAKE ) then
 				_zeroOut = tMap.rms[ _idx ].rObj[ _BiRm ].count - _count
+				if _sound then tMap.rms[ _idx ].rObj[ _BiRm ].sound = _sound end
 				if _BinRMN then			--NESTED
 					if _zeroOut <= 0 then
 						tMap.rms[ _idx ].rObj[ _AiRm ].oBag[ _BiRmN ].count =

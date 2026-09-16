@@ -68,8 +68,8 @@ function loop3( dt )
 			--NEED TO CREATE OUR 1st ROOM TO GIVE MAP A STARTING POINT TO WORK WITH
 			--TICTOK ALSO STILL OUT OF THE LOOP...
 			for a = 1, #tMap.hDeadTypist do		--ANIMATE OUR DEAD-TYPIST
-				if a == 11 then
-					fu = nil		--TAP-IN POINT IF WE ARE TRACKING EXACT LINE IN LOADING FILE
+				if a == 19 and tMap.fileName == "Meditation Space" then
+					fu = nil	--GIVING MYSELF A LINE TO TARGET
 				end
 				tMap.keylog = tMap.hDeadTypist[ a ]	--DON'T load FROM HERE, GHOST TW IN PLAY MODE AS BEFORE
 				love.keypressed( "return" )
