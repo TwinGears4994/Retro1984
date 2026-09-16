@@ -86,44 +86,44 @@ hide stairs
 +tw enter stairs TW load TwinGears@gmail.com 'Common Grow Dome' r-4039
 
 R-5006
-+ 13 koi true false
++ 13 koi true false 'ZenToilet001.ogg'
 repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 90 koi 99
 repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 60 koi 99
 repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 40 koi 99
 R-5002
-+ 3 crayfish true true
++ 3 crayfish true true 'Pour Tea Kick.ogg'
 repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 90 crayfish 99
 repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 60 crayfish 99
 repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 30 crayfish 99
 R-5007
-+ 7 koi true false
++ 7 koi true false 'ZenToilet002.ogg'
 repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 90 koi 99
 repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 60 koi 99
 repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 40 koi 99
 
-+ 10 tilapia true false
++ 10 tilapia true false 'VaccuumSwitch.ogg'
 repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove tilapia
 repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove tilapia
 repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove tilapia
 R-5017
 
 R-5030
-+ 15 'small trout' true true
++ 15 'small trout' true true 'SingingBowlRecNeedleLike.ogg'
 repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 30 'small trout' 40
 repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 30 'small trout' 40
 repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 30 'small trout' 40
 R-5029
-+ 5 'small salmon' true true
++ 5 'small salmon' true true 'Zipper005.ogg'
 repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 'small salmon' 50
 repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 'small salmon' 50
 repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 'small salmon' 50
 R-5028
-+ 3 catfish true false
++ 3 catfish true false 'SingingBowlReverse.ogg'
 repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove catfish 80
 repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove catfish 80
 repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove catfish 80
 R-5014
-+ 10 'largemouth bass' true false
++ 10 'largemouth bass' true false 'Zipper004.ogg'
 repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 'largemouth bass'
 repeat 00:01:00:0 +tw timer 00:00:10:0 TW omove 'largemouth bass'
 repeat 00:10:00:0 +tw timer 00:00:30:0 TW omove 'largemouth bass'
