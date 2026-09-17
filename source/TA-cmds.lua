@@ -214,7 +214,8 @@ function setTW( _tw, _cmd )										--INSERT TRIPWIRE INTO TARGET OBJ OR ROOM
 			local _onAU, _iAu = tRetro:objAuEXISTS( _tw[ _iObj ] )
 			if _onAU then table.insert( tMap.auLeg[ _iAu ].tripWire, _tw ) end
 		end
-	elseif _cmd == "rtw" then		--NON-OBJECT TARGET
+	end
+	if _cmd == "rtw" then		--NON-OBJECT TARGET
 		table.insert( tMap.rms[ _idx ].rTripWire, _tw )
 	end
 end
