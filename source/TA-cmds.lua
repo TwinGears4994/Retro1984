@@ -1619,42 +1619,27 @@ end
 		end
 		return _DIRT, _word, _singleDIRT, _dirtNUM, _multiDIRT,  _N,_S,_W,_E,_D,_U, _count, _rNum
 	end
-
-	function isInExit( _tbl, _exit )
-		for a =1, #_tbl do
-			if _tbl[a] == _exit then
-				return true
-			end
-		end
-		return false
-	end
-
---( _singleDIRT, _multiDIRT, _dirtNUM, _dirt, _N,_S,_W,_E,_D,_U, _exitLoops )
-	function isExitInRm( _dirt, _exitLoops )				--RETURN IN-ROOM EXIST FOR MULTI-DIRT OR DIRT#
+	
+	function isExitInTbl( _tbl, _dirt, _exitLoops )				--RETURN IN-ROOM EXIST FOR MULTI-DIRT OR DIRT#
 		--NOTICE SINGLE-DIRT CAN NOW BE MULTI-CHARACTER WIDE NSD,NW,SE,UW...
-		local _iRm = tMap.rms.idx
-		local _firstExitIdx = 0
-		local _lastExitIdx = 0
 		local _loopCount = 0
-		if _dirt and #tMap.rms[ _iRm ].rExits >0 then
-			for b =1, #tMap.rms[ _iRm ].rExits do
-				if string.match( _dirt,"%a+" ) == string.match( tMap.rms[ _iRm ].rExits[ b ],"%a+" ) then		--SINGLE CHAR "SED","NE"
+		local _b = 0
+		if _dirt and #_tbl >0 then
+			for b =1, #_tbl do
+				if string.match( _dirt,"%a+" ) == string.match( _tbl[ b ],"%a+" ) then		--SINGLE CHAR "SED","NE" or "N"...
 					_loopCount = _loopCount +1
-					if _firstExitIdx == 0 then
-						_firstExitIdx = b
-						_lastExitIdx = b
-					else
-						_lastExitIdx = b
-					end
+					_b = b
+					if _exitLoops == _loopCount then
+						return true, _b,	_loopCount -1	--RETURN THE EXIST INDEX IN THE ROOM, AND _m
+					end															--
 				end
 			end
-		end
-		if _lastExitIdx > 0 then
-			if _exitLoops == _lastExitIdx then
-				return true, _firstExitIdx, _lastExitIdx, _exitLoops -_loopCount		--RETURN THE EXIST INDEX IN THE ROOM
+			--DATA SHOWING AUTHOR OR USER HAS TYPED DIRT THAT ISN'T CORRECT
+			if _loopCount >0 then
+				return false, _b, _loopCount
 			end
 		end
-		return false, _firstExitIdx, _lastExitIdx, 0
+		return false, 0, 0
 	end
 
 	function isMXYZinSTORY( _map4D )
@@ -1943,40 +1928,39 @@ end
 	end
 
 	function runCmdDirt( _path, _SUDO )	--DO NOT TOUCH, PERFECTLY SMOOTH WITHOUT DIRT ISSUES
-		--return _DIRT, _word, _singleDIRT, _dirtNUM, _multiDIRT,  _N,_S,_W,_E,_D,_U, _count, _rNum
 		local _DIRT, _dirt, _singleDIRT, _dirtNUM, _dupliDIRT, _N,_S,_W,_E,_D,_U, _exitLoops, _rNum = isDIRT( _path )
 		if _DIRT then
-			local _rmIdxA, _rmIdxB = tMap.rms.idx, nil
-			local _rmNumA, _rmNumB = string.match( tMap.rms[ _rmIdxA ].rRoomNum,"-%d+" ) or string.match( tMap.rms[ _rmIdxA ].rRoomNum,"%d+" ), nil
-			local _mapB = tRetro:tblClone( tMap.rms[ _rmIdxA ].rMap4D )
-			--C IS OUR 3rd LEG FOR +M ROOMS AS WE ARE STEARING WITH MAP4D AND NOT DIRT
-			--local _mapEXISTSC, _rmNumC, _rmIdxC = false, nil, nil
-			--local _mapC = tRetro:tblClone( tMap.rms[ _rmIdxA ].rMap4D )
+			local _rmNumA, _rmAi, _RMxA, _rmAx, _rmAxi = 0, tMap.rms.idx, false,0,0
+			local _rmNumB, _rmBi, _RMxB, _rmBx, _rmBxi = 0,0, false,0,0
+			_rmNumA = string.match( tMap.rms[ _rmAi ].rRoomNum,"-%d+" ) or string.match( tMap.rms[ _rmAi ].rRoomNum,"%d+" ) or _rNum
+			local _dirtA = string.match( _dirt,"%a" )	-- + TRIM OFF DUPLICATES
+			local _mapB = tRetro:tblClone( tMap.rms[ _rmAi ].rMap4D )
 			local _dirtMirror = nil
-			local _EXITA, _EXITB = false, false
-			local _mapEXISTSB = false
-			local _exitCounted, _exitNumDiff = 0,0
 			local _m = 0
-			local _dirtA = string.match( _dirt,"%a+" )
-			--local _M = false
-			if _dupliDIRT then
-				_dirtA = string.match( _dirt,"%a" )		--TRIM OFF DUPLICATES
+			--CHECKING AUTHOR MULTI-EXIT CMD AS MULTI-EXIT MAY NOT EXIST YET!
+			if ( _dirtNUM or _dupliDIRT ) and _exitLoops > 0 then
+				_RMxA, _rmAxi, _m = isExitInTbl( tMap.rms[ _rmAi ].rExits, _dirtA, _exitLoops )
 			end
-			--WORKING THE MULTI-EXITS SITUATION
---		if _dirtNUM or _dupliDIRT and _exitLoops >0 then
---			_m = _exitLoops -1
---		end
-			_mapEXISTSB, _rmNumB, _mapB, _rmIdxB = tRetro:nextRoomNum( _rmNumA, _mapB, _m, _N,_S,_W,_E,_D,_U )
-			--3rd LEG C SHOULDN'T JUST BE ADJUSTING MAP4D BUT ALSO FALLBACK TO USER-DIRT INSTRUCTIONS
-			if not _mapEXISTSB and #tMap.rms[ _rmIdxA ].rExits >0 and not _SUDO then
-				_mapB = tRetro:tblClone( tMap.rms[ _rmIdxA ].rMap4D )
+			if _RMxA and ( _rmAxi > 0 or _m > 0 ) then
+				_RMxB, _rmNumB, _mapB, _rmIdxB = isRmInSTORY( _rmNumA )
+			elseif not _RMxA and ( _rmAxi > 0 or _m > 0 ) then
+				_RMxA = true
+				_RMxB, _rmNumB, _mapB, _rmIdxB = isRmInSTORY( tMap.rms[ _rmAi ].rExits[ _rmAxi ] )
+			end
+			
+			if not _RMxB then
+				--LETS LOOK FOR ROOM-B
+				_RMxB, _rmNumB, _mapB, _rmBxi = tRetro:nextRoomNum( _rmNumA, _mapB, _m, _N,_S,_W,_E,_D,_U )
+			end
+			if not _SUDO and not _RMxB and #tMap.rms[ _rmAi ].rExits >0 then
+				--_mapB = tRetro:tblClone( tMap.rms[ _rmIdxA ].rMap4D )
 				--DOES DIRT MATCH TARGET EXIT?
 				local _count = 1
 				local _exitNum = nil
-				for a =1, #tMap.rms[ _rmIdxA ].rExits do
-					if _dirtA == string.match( tMap.rms[ _rmIdxA ].rExits[ a ],"%a" ) then
+				for a = 1, #tMap.rms[ _rmAi ].rExits do
+					if _dirtA == string.match( tMap.rms[ _rmAi ].rExits[ a ],"%a" ) then
 						if _count == _exitLoops then
-							_exitNum = string.match( tMap.rms[ _rmIdxA ].rExits[a],"-%d+" ) or string.match( tMap.rms[ _rmIdxA ].rExits[a],"%d+" )
+							_exitNum = string.match( tMap.rms[ _rmAi ].rExits[ a ],"-%d+" ) or string.match( tMap.rms[ _rmAi ].rExits[ a ],"%d+" )
 							break
 						else
 							_count = _count +1
@@ -1984,33 +1968,34 @@ end
 					end
 				end
 				if _exitNum then
-					_mapEXISTSB, _rmNumB, _mapB, _rmIdxB = isRmInSTORY( _exitNum )
+					_RMxB, _rmNumB, _mapB, _rmBxi = isRmInSTORY( _exitNum )
 				end
 			end
-
-			if not tMap.rmNOEXITS and _SUDO then
-				if _mapEXISTSB then
-					_EXITA, _firstExitIdx, _lastExitIdx, _exitNumDiff = isExitInRm( _dirtA .._rmNumB, _exitLoops )
+			
+			if _SUDO and not tMap.rmNOEXITS then
+				if _RMxB then
+					_EXITA, _exitIdxA, _m = isExitInTbl( tMap.rms[ _rmAi ].rExits, _dirtA .._rmNumB, _exitLoops )
 					--while _exitNumDiff >0 do
-					if _exitNumDiff >0 then				--TIME TO ADD SAME EXIT +m ;)
-						_mapEXISTSB, _rmNumB, _mapB, _rmIdxB = tRetro:nextRoomNum( _rmNumB, _mapB, 1, false,false,false,false,false,false )
-						_EXITA = false		--RESET BOOL AND LET ADDING EXIT FUNTION DO THE FILTERING OUT OF DUPLICATES
+					if _m >0 then				--TIME TO ADD SAME EXIT +m ;)
+						_RMxB, _rmNumB, _mapB, _rmIdxB = tRetro:nextRoomNum( _rmNumB, _mapB, _m, false,false,false,false,false,false )
+						--_EXITA = false		--RESET BOOL AND LET ADDING EXIT FUNTION DO THE FILTERING OUT OF DUPLICATES
 					end
 				end
-				if not _EXITA then		--ADD EXIT
-					tMap.rms[ _rmIdxA ].rExits = tRetro:rmAddExit( tMap.rms[ _rmIdxA ].rExits, _dirtA .._rmNumB )
+				--ADD EXIT TO ROOM-A
+				if not _EXITA then		
+					tMap.rms[ _rmIdxA ].rExits = tRetro:rmAddExit( tMap.rms[ _rmAi ].rExits, _dirtA .._rmNumB )
 				end
 			end
+			--CREATE ROOM-B
 			_dirtMirror = mirrorDirt( _rmNumA, _N,_S,_W,_E,_D,_U )
-			if not _mapEXISTSB and tMap.rmNOEXITS and _SUDO then		--CREATE ROOM
-				tRetro:rmCreate( tMap.rms[ _rmIdxA ].rLabel, "R".. _rmNumB, _mapB, nil )
-			elseif not _mapEXISTSB and _SUDO then
-				tRetro:rmCreate( tMap.rms[ _rmIdxA ].rLabel, "R".. _rmNumB, _mapB, _dirtMirror )
-			elseif _mapEXISTSB and not tMap.rmNOEXITS and _SUDO then		--EXIT FOR EXISTING ROOM
-				tMap.rms[ _rmIdxB ].rExits = tRetro:rmAddExit( tMap.rms[ _rmIdxB ].rExits, _dirtMirror )
+			if _SUDO and not _RMxB and tMap.rmNOEXITS then
+				tRetro:rmCreate( tMap.rms[ _rmAi ].rLabel, "R".. _rmNumB, _mapB, nil )	--CREATE ROOM
+			elseif not _RMxB and _SUDO then
+				tRetro:rmCreate( tMap.rms[ _rmAi ].rLabel, "R".. _rmNumB, _mapB, _dirtMirror )
+			elseif _RMxB and not tMap.rmNOEXITS and _SUDO then										--EXIT FOR EXISTING ROOM
+				tMap.rms[ _rmBi ].rExits = tRetro:rmAddExit( tMap.rms[ _rmBi ].rExits, _dirtMirror )
 			end
-			tRetro:switchRoom( _mapB )		--runCmdJumpRm( nil, true, _mapB )
-			--return true
+			tRetro:switchRoom( _mapB )
 		end
 		return false
 	end
