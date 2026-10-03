@@ -165,12 +165,13 @@ function love.keypressed( _word )	--WORD HELPS EXPLAIN FUNCTION FILTER
 						tMap.keylog = tostring( tMenu.menuPointerIdx )
 					end
 						-- *** WITH KEY-STROKES BELOW ***
-					if tonumber( tMap.keylog ) == 0 then
+					if tonumber( tMap.keylog ) == 0 then								--SELECT-NEW(0)
 						--CREATE NEW-EVENT AND PUT THAT IN MEMORY
-						tMap.eventsA.idx = tonumber( tMap.keylog )	--WE NEED THAT INDEX LATER SO SET INDEX
+						tMap.eventsA.idx = tonumber( tMap.keylog )				--WE NEED THAT INDEX LATER SO SET INDEX
 						tMap.fileName = tMap.eventsA[ tMap.eventsA.idx ]
 						tMap.keylog = ""
-						tSM:walk( false )
+						tSM.idxState = 1
+						tSM.curState = tSM.l2[ tSM.idxState ]
 					elseif tonumber( tMap.keylog ) > 0 then
 						tMap.eventsA.idx = tonumber( tMap.keylog )
 						--tStory.authors.idxA = tMenu.menuPointerIdx
@@ -196,17 +197,20 @@ function love.keypressed( _word )	--WORD HELPS EXPLAIN FUNCTION FILTER
 				elseif tSM.curState == "NEW-EVENT" then		--tSM.l2[ tSM.idxState ]
 					_fnFOLDER, _FILE = false, false
 					local _fileSize = nil
-					if string.match( tMap.keylog, "%a+" ) then				--AT LEAST 1 LETTER
-						tMap.fileName = tMap.keylog
+					local _eventName, _rvNumName = isFileNameRV( tMap.keylog ) -- tMap.fileName )
+					--if string.match( tMap.keylog, "%a+" ) then				--AT LEAST 1 LETTER
+					if _rvNumName then
+						tMap.fileName = _rvNumName	--tMap.keylog
+					elseif _eventName then
+						tMap.fileName = _eventName
 					else
-						tMap.fileName = "DieHold2046"	--DEFAULT filename
+						tMap.fileName = "DieHold2046"	--DEFAULT FALLBACK FILENAME
 					end
 					--WE REALLY DO NEED TO CREATE THE FILE TO MAKE LIFE EASIER WHEN WE JUMP BACK TO STORY LIST
 					_fnFOLDER, _FILE, _fileSize = chkFileZero( tMap.hAuthor, tMap.fileName )
 					if not _FILE then
 						createFSEvent( tMap.hAuthor, tMap.fileName, _fnFOLDER ) 			--WORKS FINE
-						--COULD REALLY USE A WAY TO TELL IF FILENAME LOADED IS RV# OR NOT! EVEN FROM CREATION POV
-						tMap.hEventName, tMap.hRVnum = isFileNameRV( tMap.fileName )
+						tMap.hEventName, tMap.hRVnum = _eventName, _rvNumName					--isFileNameRV( tMap.fileName )
 						tMap.keylog = ""
 						tSM:walk( true )
 					else

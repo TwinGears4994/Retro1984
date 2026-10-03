@@ -19,7 +19,7 @@ function isFileNameRV( _fileName )	--9 CHARACTERS LONG WITH "-" AS 5 CHARACTER
 	if not _fileName then
 		return _,_		--FAILED FILENAME
 	elseif _nineLONG and _dashFIVE then
-		return _, _fileName
+		return _, string.upper( _fileName )
 	else
 		return _fileName, _
 	end
