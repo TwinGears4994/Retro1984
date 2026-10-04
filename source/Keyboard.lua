@@ -199,9 +199,9 @@ function love.keypressed( _word )	--WORD HELPS EXPLAIN FUNCTION FILTER
 					local _fileSize = nil
 					local _eventName, _rvNumName = isFileNameRV( tMap.keylog ) -- tMap.fileName )
 					--if string.match( tMap.keylog, "%a+" ) then				--AT LEAST 1 LETTER
-					if _rvNumName then
+					if #_rvNumName > 0 then
 						tMap.fileName = _rvNumName	--tMap.keylog
-					elseif _eventName then
+					elseif #_eventName > 0 then
 						tMap.fileName = _eventName
 					else
 						tMap.fileName = "DieHold2046"	--DEFAULT FALLBACK FILENAME

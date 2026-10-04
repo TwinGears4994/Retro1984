@@ -16,9 +16,9 @@ function isFileNameRV( _fileName )	--9 CHARACTERS LONG WITH "-" AS 5 CHARACTER
 	if _fileName and string.find( _fileName, "-", 1 ) == 5 then
 		_dashFIVE = true
 	end
-	if not _fileName then
-		return _,_		--FAILED FILENAME
-	elseif _nineLONG and _dashFIVE then
+--	if not _fileName then
+--		return _,_		--FAILED FILENAME
+	if _nineLONG and _dashFIVE then
 		return _, string.upper( _fileName )
 	else
 		return _fileName, _
