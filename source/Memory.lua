@@ -46,13 +46,15 @@ function fPortHoleInject( _table, _target )
 		end
 	elseif _target == "bb" then
 		function _table:bb()
-			if self.BBON then	--ON >> OFF
+			if self.BBON then							--ON >> OFF
 				self.BBON = false
 				runAllRmLIVE( true )
-				self.buildMode = 7	--PLAY-MODE
-				removeDeadCount()		-- *** REMOVE OBJS.count == 0 FROM TABLES ***
-				addGhostTW()				-- *** GHOSTS ARE BACK AGAIN ***
-				tMap:ticToc( true, "00:00:00:0" )--RESET THE ROOM TIME TO ZEROS
+				chkRVnumFStoReport()				--FEEDBACK ON-SCREEN IF RV# ISN'T IN LIBRARY
+				self.buildMode = 7					--PLAY-MODE
+				removeDeadCount()						-- *** REMOVE OBJS.count == 0 FROM TABLES ***
+				addGhostTW()								-- *** GHOSTS ARE BACK AGAIN ***
+				--tMap:ticToc( true, "00:00:00:0" )--RESET THE ROOM TIME TO ZEROS
+				tRetro:playerstart( tMap.hPlayerStart )
 			else							--OFF >> ON
 				self.BBON = true
 				runAllRmLIVE( false )
@@ -221,7 +223,7 @@ function funcInject( _table, _target )	--{ tRetro }
 			"on","off","open","close","help","unpack","pack",
 			"fill","empty",					--PLACE OBJ INSIDE OBJ
 			"bb",--"press","push","pull", --"increase","decrease",
-			"look","read","playerstart",
+			"look","read","beginmap",	--,"playerstart"
 			"sit","stand","enter","touch",
 			"defend","attack",
 			"load"	--"load TwinGears@gmail.com filename r#"

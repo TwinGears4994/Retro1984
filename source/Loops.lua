@@ -68,23 +68,17 @@ function loop3( dt )
 			--NEED TO CREATE OUR 1st ROOM TO GIVE MAP A STARTING POINT TO WORK WITH
 			--TICTOK ALSO STILL OUT OF THE LOOP...
 			for a = 1, #tMap.hDeadTypist do		--ANIMATE OUR DEAD-TYPIST
-				if a == 45 and tMap.fileName == "F015-EEBF" then
-					fu = nil	--GIVING MYSELF A LINE TO TARGET IN SPECIFIC FILE BEING TESTED
-				end
 				tMap.keylog = tMap.hDeadTypist[ a ]	--DON'T load FROM HERE, GHOST TW IN PLAY MODE AS BEFORE
-				love.keypressed( "return" )
-			end
-			tMap:ticToc( true ) --,_hh,_mm,_ss,_fr = 0,0,0,0 RESET
-			tMap.deadTYPIST = false
-			tMap.hDeadTypist = { idx =1, iChar =1 }	--UNLOADING LOADED FILE DATA
-			--FILE MIGHT CONTAIN EXTRA BB AND FILE LOCKED ETC...
-			if tPortHole.BBON then
-				--FEEDBACK ON-SCREEN IF RV# ISN'T IN LIBRARY
-				chkRVnumFStoReport()
-				tPortHole:bb()
-				--removeDeadCount()							--INCLUDED IN BB
-				--addGhostTW()									--INCLUDED IN BB
-				tRetro:playerstart( tMap.hPlayerStart )	--check this over again down the road - maybe REM line
+				if a == 23 and tMap.fileName == "Meditation Space" then	--ADDING TIC-TOC 1980s EXERCISE TO FILE SOON
+					fu = nil											--GIVING MYSELF A LINE TO TARGET IN SPECIFIC FILE BEING TESTED
+				end
+				if tPortHole.BBON or a == 1 then	--AUTOMATED <RETURN> IF BUILD-MODE-ON & IN-FILE
+					love.keypressed( "return" )			--DO WE NEED SEPERATE CMD AGAIN 'playerstart'
+				elseif a == #tMap.hDeadTypist then
+					tMap.deadTYPIST = false							--NEED TO PROTECT THIS
+					tMap.hDeadTypist = { idx =1, iChar =1 }	--UNLOADING LOADED FILE DATA
+					tPortHole:bb()
+				end
 			end
 			-- *** TIMING LOOP ***								MEANS DEAD-TYPIST HAS BEEN LOADED, RUN & RETIRED
 		elseif tMap.oneTenthSEC then				-- *** 1/10th SECOND ***

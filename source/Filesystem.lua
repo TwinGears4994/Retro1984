@@ -103,7 +103,6 @@ function createFSEvent( _author, _fileName, _fnFOLDER )
 	if not _fnFOLDER and #_fileName > 0 then
 		setAuthRootPath( "AU", _author, _fileName )
 		createDir( _fileName )
-		
 	end
   if #_fileName > 0 then
 		setAuthRootPath( "else", _author, _fileName )

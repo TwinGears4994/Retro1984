@@ -1028,7 +1028,6 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 				_EXISTS, _, _map4D, _idx = isRmInSTORY( tMap.hPlayerStart )
 				--_mapEXISTSB, _rmNumB, _mapB, _rmIdxB
 				if _EXISTS then
-
 					tRetro:switchRoom( tMap.rms[ _idx ].rMap4D )
 				end
 				tMap.keylog = ""						--WE DON'T WANT THIS CMD RECORDED
@@ -1285,19 +1284,20 @@ function rmTWchk( _tw )			-- *** PROCESS ALL CURRENT-RM TW & OBJS[OBJS] AGAINST 
 			_GO = true
 			for iBag =1, #tPortHole.ghosts[ _idx ].rObj[ iObj ].oBag do
 				--.oBag[] IS NESTED OBJ[ IN OBJ ]
-				while _a <= #_tw and _GO do		--DATA WALK
-					--if  tPortHole.ghosts[ _idx ].rObj[ iObj ].oBag[ iBag ].tripWire[ 1 ] == _tw[ 1 ] then
-					if tPortHole.ghosts[ _idx ].rObj[ iObj ].oBag[ iBag ].tripWire[ iTW ][ _a ] == _tw[ _a ] then
-						if _a == #_tw then		--oBag LOOP INTO SELF FUNCTION LIKE FRACTAL BUT THAT MEANS TBL FEED!
-							trimFwdTW( tPortHole.ghosts[ _idx ].rObj[ iObj ].oBag[ iBag ].tripWire[ iTW ] )
+				for iTW =1, #tPortHole.ghosts[ _idx ].rObj[ iObj ].oBag[ iBag ].tripWire do
+					while _a <= #_tw and _GO do		--DATA WALK
+						if tPortHole.ghosts[ _idx ].rObj[ iObj ].oBag[ iBag ].tripWire[ iTW ][ _a ] == _tw[ _a ] then
+							if _a == #_tw then		--oBag LOOP INTO SELF FUNCTION LIKE FRACTAL BUT THAT MEANS TBL FEED!
+								trimFwdTW( tPortHole.ghosts[ _idx ].rObj[ iObj ].oBag[ iBag ].tripWire[ iTW ] )
+							end
+						else
+							_GO = false		--FALL BACK
 						end
-					else
-						_GO = false		--FALL BACK
+						_a = _a +1
 					end
-					_a = _a +1
+					_a = 2
+					_GO = true
 				end
-				_a = 2
-				_GO = true
 			end
 			_a = 2
 			_GO = true
