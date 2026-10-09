@@ -50,7 +50,7 @@ function fPortHoleInject( _table, _target )
 				self.BBON = false
 				runAllRmLIVE( true )
 				self.buildMode = 7					--PLAY-MODE
-				tRetro:beginmap( tMap.hPlayerStart )
+				--tRetro:beginmap( tMap.hPlayerStart )
 			elseif _BOOL or not self.BBON then	--TURN ON
 				self.BBON = true
 				runAllRmLIVE( false )
