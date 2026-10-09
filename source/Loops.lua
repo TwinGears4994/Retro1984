@@ -56,28 +56,30 @@ function loop3( dt )
 		tMap:ticToc()
 	end
 	local _bFLAG = false
-	if tSM.curState == "LCS-TA" then		--l3[ tSM.idxState ]
+	if tSM.curState == "LCS-TA" then			--l3[ tSM.idxState ]
 		--PER-SECOND FOR BOARDER UPDATE
 		if tMap.oneSEC then
 			tPortHole:updateBdrColour( tMap.cmdsKeyLog )	--ROTATE 1st ERROR COLOUR
 			tMap.oneSEC = false
-			--GHOSTED-OBJECTS NEED UPDATING IF ANY OBJECT MADE A CHANGE, CREATE NEW GHOSTED TABLE
 		end
 		-- *** DEAD-TYPIST LOOP ***
-		if tMap.deadTYPIST then						--.typeDeadFast 
+		if tMap.deadTYPIST then
 			--NEED TO CREATE OUR 1st ROOM TO GIVE MAP A STARTING POINT TO WORK WITH
-			--TICTOK ALSO STILL OUT OF THE LOOP...
 			for a = 1, #tMap.hDeadTypist do		--ANIMATE OUR DEAD-TYPIST
 				tMap.keylog = tMap.hDeadTypist[ a ]	--DON'T load FROM HERE, GHOST TW IN PLAY MODE AS BEFORE
 				if a == 23 and tMap.fileName == "Meditation Space" then	--ADDING TIC-TOC 1980s EXERCISE TO FILE SOON
 					fu = nil											--GIVING MYSELF A LINE TO TARGET IN SPECIFIC FILE BEING TESTED
 				end
-				if tPortHole.BBON or a == 1 then	--AUTOMATED <RETURN> IF BUILD-MODE-ON & IN-FILE
-					love.keypressed( "return" )			--DO WE NEED SEPERATE CMD AGAIN 'playerstart'
-				elseif a == #tMap.hDeadTypist then
-					tMap.deadTYPIST = false							--NEED TO PROTECT THIS
+				if tPortHole.BBON then			--AUTOMATIC <RETURN>
+					love.keypressed( "return" )		--AUTOMATED <RETURN> IF BUILD-MODE-ON & IN-FILE
+				end
+				if a == #tMap.hDeadTypist then	--LAST LINE TO PROCESS
+					tMap.deadTYPIST = false
 					tMap.hDeadTypist = { idx =1, iChar =1 }	--UNLOADING LOADED FILE DATA
-					tPortHole:bb()
+					chkRVnumFStoReport()					--FEEDBACK ON-SCREEN IF RV# ISN'T IN LIBRARY
+					removeDeadCount()							-- *** REMOVE OBJS.count == 0 FROM TABLES ***
+					addGhostTW()									-- *** GHOSTS ARE BACK AGAIN ***
+					tPortHole:bb( false )					--MAYBE ALREADY OFF AND THAT'S OKAY
 				end
 			end
 			-- *** TIMING LOOP ***								MEANS DEAD-TYPIST HAS BEEN LOADED, RUN & RETIRED

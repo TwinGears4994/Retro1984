@@ -1019,22 +1019,22 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 		--_runGHOST = true
 		local _objA = nil
 		if not tMap.hDataLOCKED and _cmd == "bb" then	--TYPED >> CMD CONTROL SORTING BEGINS HERE
-			tPortHole:bb()		--BUILD-MODE ON IS TRUE, PLAY-MODE IS FALSE
-			tMap.keyLogDROPIT = true
-			--return _SUCCESS		--REMOVING TAKE AND DROP FROM HERE or _cmd == "take" or _cmd == "drop"
-		elseif _cmd == "playerstart" then
-			tMap.keyLogDROPIT = true			--NOT RECORDING THIS DATA, THUS WILL NEVER REACH THE FILE WITH SAVE
-			if #tMap.hPlayerStart >0 then
-				_EXISTS, _, _map4D, _idx = isRmInSTORY( tMap.hPlayerStart )
-				--_mapEXISTSB, _rmNumB, _mapB, _rmIdxB
-				if _EXISTS then
-					tRetro:switchRoom( tMap.rms[ _idx ].rMap4D )
-				end
-				tMap.keylog = ""						--WE DON'T WANT THIS CMD RECORDED
-				return false
-			else
-				return false
-			end
+			tPortHole:bb()								--WILL TAKE TRUE/FALSE ELSE TOGGLE VALUE
+			--tMap.keyLogDROPIT = true
+		elseif _cmd == "beginmap" then
+			tRetro:beginmap( tMap.hPlayerStart )
+			--tMap.keyLogDROPIT = true			--NOT RECORDING THIS DATA, THUS WILL NEVER REACH THE FILE WITH SAVE
+--			if #tMap.hPlayerStart >0 then
+--				_EXISTS, _, _map4D, _idx = isRmInSTORY( tMap.hPlayerStart )
+--				--_mapEXISTSB, _rmNumB, _mapB, _rmIdxB
+--				if _EXISTS then
+--					tRetro:switchRoom( tMap.rms[ _idx ].rMap4D )
+--				end
+--				tMap.keylog = ""						--WE DON'T WANT THIS CMD RECORDED
+--				return false
+--			else
+--				return false
+--			end
 		elseif _cmd == "load" then		--"load author filename R#"
 			if #_tw == 2 then							--SINGLE CMD AND ROOM EXISTS
 				if #tMap.hPlayerStart > 0 then
@@ -1976,21 +1976,21 @@ end
 		return false
 	end
 
-	function runAllRmLIVE( _switch )	--ALL ROOMS LIVE AND ROOM ENTERED COUNTS ZEROED
+	function runAllRmLIVE( _SWITCH )	--ALL ROOMS LIVE AND ROOM ENTERED COUNTS ZEROED
 		--ALSO ACCOUNT FOR NESTED OBJS THAT ALSO *** TOGGLE LIVE***
 		--tMap.hDataLOCKED = true
 		for idx =1, #tMap.rms do
 			--NEED TO DEAL WITH NESTED OBJECTS HERE!
-			tMap.rms[ idx ].rTWrmLIVE = _switch
+			tMap.rms[ idx ].rTWrmLIVE = _SWITCH
 			tMap.rms[ idx ].rEnteredRmCount = 0
 			--SWITCH-ON LIVE OBJECTS
 			if #tMap.rms[ idx ].rObj >0 then
 				for a =1, #tMap.rms[ idx ].rObj do
-					tMap.rms[ idx ].rObj[ a ].tripWireLIVE = _switch	--TIMER & TW MATCHING
+					tMap.rms[ idx ].rObj[ a ].tripWireLIVE = _SWITCH	--TIMER & TW MATCHING
 					--NESTED OBJECTS IN-ROOM
 					if #tMap.rms[ idx ].rObj[ a ].oBag >0 then
 						for b =1, #tMap.rms[ idx ].rObj[ a ].oBag do
-							tMap.rms[ idx ].rObj[ a ].oBag[ b ].tripWireLIVE = _switch
+							tMap.rms[ idx ].rObj[ a ].oBag[ b ].tripWireLIVE = _SWITCH
 						end
 					end
 				end
@@ -1999,11 +1999,11 @@ end
 		--ALSO NEED TO SWITCH-ON LIVE OBJECTS ON THE PLAYER
 		if #tMap.auLeg >0 then
 			for idx =1, #tMap.auLeg do
-				tMap.auLeg[ idx ].tripWireLIVE = _switch
+				tMap.auLeg[ idx ].tripWireLIVE = _SWITCH
 				--NESTED OBJECTS ON-AUTHOR
 				if #tMap.auLeg[ idx ].oBag >0 then
 					for b =1, #tMap.auLeg[ idx ].oBag do
-						tMap.auLeg[ idx ].oBag[ b ].tripWireLIVE = _switch
+						tMap.auLeg[ idx ].oBag[ b ].tripWireLIVE = _SWITCH
 					end
 				end
 			end

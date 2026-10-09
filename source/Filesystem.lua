@@ -190,8 +190,6 @@ function eventFileLoad( _author, _fileName )
 	end
 	if #_tbl >0 then
 		--SWITCH TO PLAY MODE
-		if tPortHole.BBON then tPortHole:bb() end
-		--tMap.fileName, tMap.hRVnum = isFileNameRV( _fileName )
 		tMap.fileName = _fileName
 		tMap:setNewMap( _author, _fileName )
 		tRetro:rmCreate( _fileName,"R1",{ m =0, x =0, y =0, z =0 },nil )
@@ -201,6 +199,7 @@ function eventFileLoad( _author, _fileName )
 		listImages()
 		listVideos()
 		tMap.keyLogDROPIT = true
+		if not tPortHole.BBON then tPortHole:bb( true ) end
 		return true		--FEEDS tMap.deadTYPIST
 	end
 	return false

@@ -45,17 +45,13 @@ function fPortHoleInject( _table, _target )
 			self.ghosts = {}
 		end
 	elseif _target == "bb" then
-		function _table:bb()
-			if self.BBON then							--ON >> OFF
+		function _table:bb( _BOOL )
+			if not _BOOL or self.BBON then		--TURN OFF
 				self.BBON = false
 				runAllRmLIVE( true )
-				chkRVnumFStoReport()				--FEEDBACK ON-SCREEN IF RV# ISN'T IN LIBRARY
 				self.buildMode = 7					--PLAY-MODE
-				removeDeadCount()						-- *** REMOVE OBJS.count == 0 FROM TABLES ***
-				addGhostTW()								-- *** GHOSTS ARE BACK AGAIN ***
-				--tMap:ticToc( true, "00:00:00:0" )--RESET THE ROOM TIME TO ZEROS
-				tRetro:playerstart( tMap.hPlayerStart )
-			else							--OFF >> ON
+				tRetro:beginmap( tMap.hPlayerStart )
+			elseif _BOOL or not self.BBON then	--TURN ON
 				self.BBON = true
 				runAllRmLIVE( false )
 				self.buildMode = 6	--BUILDING-MODE NEW FALLBACK TO WHITE AS ALL DONE
@@ -1324,8 +1320,8 @@ function funcInject( _table, _target )	--{ tRetro }
 			end
 		return false
 		end
-	elseif _target == "playerstart" then
-		function _table:playerstart( _rmNum )
+	elseif _target == "beginmap" then
+		function _table:beginmap( _rmNum )
 			local _EXISTS,_, _map4D, _idx = isRmInSTORY( _rmNum )
 			--_mapEXISTSB, _rmNumB, _mapB, _rmIdxB
 			if _EXISTS then				--SWITCH ROOMS
@@ -1336,6 +1332,7 @@ function funcInject( _table, _target )	--{ tRetro }
 				--_mapEXISTSB, _rmNumB, _mapB, _rmIdxB
 				tRetro:switchRoom( _map4D )
 			end
+			tPortHole:bb( false )
 		end
 	elseif _target == "setAu" then	--CAN OBJ BE TAKEN, SORT BOTH OBJ COUNTS
 		function _table:setAu( _name )

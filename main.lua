@@ -7,7 +7,7 @@ math.randomseed( os.time() )    --RATHER IMPORTANT
 utf8 = require("utf8")
 
 function love.load( arg )
-  if arg[ #arg ] == "-debug" then         --debugger for ZeroBrane
+  if arg[ #arg ] == "-debug" then         --debugger for ZeroBrane Code Editor
     require("mobdebug").start()
   end
   require 'source.Constants'
@@ -24,13 +24,11 @@ function love.load( arg )
 	--fPortHoldInject MEMORY CONTAINER LOOP THROUGH SUB-FUNCTIONS
 	fPortHoleInject( tPortHole,"setGUIvars" )
 	tPortHole:setGUIvars()
-	
 	--fPortHoleInject( tPortHole, "objGhostUpdate" )
 	fPortHoleInject( tPortHole, "runRndCommPicker" )
 	--fPortHoleInject( tPortHole, "listOPENEDobj" )
 	fPortHoleInject( tPortHole, "bb" )								--build mode shifting about
 	fPortHoleInject( tPortHole, "updateBdrColour" )
-	
   --POPULATE SOUND STORAGE CONTAINERS - July 2026 RE-CODING
 	
 	-- tMap BUILT-IN FUNCTIONS
@@ -40,23 +38,20 @@ function love.load( arg )
 	funcMapInject( tMap, "objlistOPENED" )
 	
 	-- tRetro BUILD-IN FUNCTIONS
+	--tRetro:setStoryMap()		--THIS REALLY SHOULD BE IN THE STATE-MACHINE
+	--	funcInject( tRetro, "reSetRooms" )			--JUST FOR tRetro.rms
+	--	funcInject( tRetro, "rmZeroRndNearist" )		--
 	funcInject( tRetro, "setPlayCmds" )
 	funcInject( tRetro, "setBuildCmds" )
 	funcInject( tRetro, "setCustomCmds" )
-	
-	--tRetro:setStoryMap()		--THIS REALLY SHOULD BE IN THE STATE-MACHINE
 	tRetro:setBuildCmds()
 	tRetro:setPlayCmds()
 	tRetro:setCustomCmds()
-
---	funcInject( tRetro, "reSetRooms" )			--JUST FOR tRetro.rms
-	
   funcInject( tRetro, "rmCreate" )						--*
 	funcInject( tRetro, "rmNumEXISTS" )				--*
 	funcInject( tRetro, "rmDel" )							--
 	funcInject( tRetro, "rmAddExit" )					--ADDING EXIT TO TABLE EXITS
 	funcInject( tRetro, "rmDelExit" )					--DELETE EXIT FROM TABLE EXITS
---	funcInject( tRetro, "rmZeroRndNearist" )		--
 	funcInject( tRetro, "rmlabel" )						--ROOM LABEL
 	funcInject( tRetro, "nextRoomMap4D" )			--*
 	funcInject( tRetro, "nextRoomNum" )				--*
@@ -81,9 +76,9 @@ function love.load( arg )
 	funcInject( tRetro, "objRename" )					--* rename # obj1 obj2
 	funcInject( tRetro, "objTake" )						--*
 	funcInject( tRetro, "objDrop" )						--*
-	--funcInject( tRetro, "objlistOPENED" )
-	funcInject( tRetro, "playerstart" )			--SETS THE PLAYERS START ROOM IF ONE HASN'T JUMPED INTO THE STORY FROM ANOTHER WAY...
+	funcInject( tRetro, "beginmap" )					--SETS THE PLAYERS START ROOM IF ONE HASN'T JUMPED INTO THE STORY FROM ANOTHER WAY...
 	funcInject( tRetro, "setAu" )							--RE-ASSIGN AUTHOR
+	--funcInject( tRetro, "objlistOPENED" )
 --	funcInject( tRetro, "objClose" )						--
 --	funcInject( tRetro, "objOpen" )						--RETURNS true IF OBJ UNLOCKED ELSE false
   --funcInject( tRetro, "objGlue" )						--NOT IN PLAY NOW
