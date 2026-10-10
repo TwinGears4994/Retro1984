@@ -1019,16 +1019,17 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 		--_runGHOST = true
 		local _objA = nil
 		if not tMap.hDataLOCKED and _cmd == "bb" then	--TYPED >> CMD CONTROL SORTING BEGINS HERE
-			if _iBool > 0 then
-				if string.lower( _tw[ _iBool ] ) == "true" then tPortHole:bb( true ) end
+			if _iBool > 0 then						--NON FLIP-FLOP MODE
+				if string.lower( _tw[ _iBool ] ) == "true" 	then tPortHole:bb( true ) end
 				if string.lower( _tw[ _iBool ] ) == "false" then tPortHole:bb( false ) end
-			else
-				tPortHole:bb()							--NON BOOL FEED
+			else													--FLIP-FLOP COME BACK ;)
+				if tPortHole.BBON 		then tPortHole:bb( false ) end
+				if not tPortHole.BBON then tPortHole:bb( true ) end
 			end
 			--tMap.keyLogDROPIT = true
 		elseif _cmd == "beginmap" then
 			tRetro:beginmap( tMap.hPlayerStart )
-		elseif _cmd == "load" then		--"load author filename R#"
+		elseif _cmd == "load" then			--"load author filename R#"
 			if #_tw == 2 then							--SINGLE CMD AND ROOM EXISTS
 				if #tMap.hPlayerStart > 0 then
 					_EXISTS,_, _map4D, _idx = isRmInSTORY( tMap.hPlayerStart )

@@ -46,14 +46,14 @@ function fPortHoleInject( _table, _target )
 		end
 	elseif _target == "bb" then
 		function _table:bb( _BOOL )
-			if _BOOL or not self.BBON then	--TURN ON
+			if _BOOL then							--TURN ON
 				self.BBON = true
 				runAllRmLIVE( false )
-				self.buildMode = 6	--BUILDING-MODE NEW FALLBACK TO WHITE AS ALL DONE
-			elseif not _BOOL or self.BBON then		--TURN OFF
+				self.buildMode = 6			--BUILDING-MODE NEW FALLBACK TO WHITE AS ALL DONE
+			elseif not _BOOL then			--TURN OFF
 				self.BBON = false
 				runAllRmLIVE( true )
-				self.buildMode = 7					--PLAY-MODE
+				self.buildMode = 7			--PLAY-MODE
 				--tRetro:beginmap( tMap.hPlayerStart )
 			end
 		end
@@ -217,8 +217,8 @@ function funcInject( _table, _target )	--{ tRetro }
 			--ADD THE CUSTOM CMDS THAT ARE PLAYING COMMANDS - KEEP COPY SEPERATE FOR EASY SAVING TO FILE
       self.playCmds = { idx =0,"take","place","drop","eat","drink","consume",
 			"on","off","open","close","help","unpack","pack",
-			"fill","empty",					--PLACE OBJ INSIDE OBJ
-			"bb",--"press","push","pull", --"increase","decrease",
+			"fill","empty",						--PLACE OBJ INSIDE OBJ
+			"bb",											--BB T/F NOW NEEDED AS FLIP-FLOP CODE GONE
 			"look","read","beginmap",	--,"playerstart"
 			"sit","stand","enter","touch",
 			"defend","attack",
