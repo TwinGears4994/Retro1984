@@ -1023,8 +1023,11 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 				if string.lower( _tw[ _iBool ] ) == "true" 	then tPortHole:bb( true ) end
 				if string.lower( _tw[ _iBool ] ) == "false" then tPortHole:bb( false ) end
 			else													--FLIP-FLOP COME BACK ;)
-				if tPortHole.BBON 		then tPortHole:bb( false ) end
-				if not tPortHole.BBON then tPortHole:bb( true ) end
+				if tPortHole.BBON 		then
+					tPortHole:bb( false )
+				elseif not tPortHole.BBON then
+					tPortHole:bb( true )
+				end
 			end
 			--tMap.keyLogDROPIT = true
 		elseif _cmd == "beginmap" then
