@@ -1019,22 +1019,15 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 		--_runGHOST = true
 		local _objA = nil
 		if not tMap.hDataLOCKED and _cmd == "bb" then	--TYPED >> CMD CONTROL SORTING BEGINS HERE
-			tPortHole:bb()								--WILL TAKE TRUE/FALSE ELSE TOGGLE VALUE
+			if _iBool > 0 then
+				if string.lower( _tw[ _iBool ] ) == "true" then tPortHole:bb( true ) end
+				if string.lower( _tw[ _iBool ] ) == "false" then tPortHole:bb( false ) end
+			else
+				tPortHole:bb()							--NON BOOL FEED
+			end
 			--tMap.keyLogDROPIT = true
 		elseif _cmd == "beginmap" then
 			tRetro:beginmap( tMap.hPlayerStart )
-			--tMap.keyLogDROPIT = true			--NOT RECORDING THIS DATA, THUS WILL NEVER REACH THE FILE WITH SAVE
---			if #tMap.hPlayerStart >0 then
---				_EXISTS, _, _map4D, _idx = isRmInSTORY( tMap.hPlayerStart )
---				--_mapEXISTSB, _rmNumB, _mapB, _rmIdxB
---				if _EXISTS then
---					tRetro:switchRoom( tMap.rms[ _idx ].rMap4D )
---				end
---				tMap.keylog = ""						--WE DON'T WANT THIS CMD RECORDED
---				return false
---			else
---				return false
---			end
 		elseif _cmd == "load" then		--"load author filename R#"
 			if #_tw == 2 then							--SINGLE CMD AND ROOM EXISTS
 				if #tMap.hPlayerStart > 0 then
