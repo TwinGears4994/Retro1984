@@ -46,15 +46,15 @@ function fPortHoleInject( _table, _target )
 		end
 	elseif _target == "bb" then
 		function _table:bb( _BOOL )
-			if not _BOOL or self.BBON then		--TURN OFF
+			if _BOOL or not self.BBON then	--TURN ON
+				self.BBON = true
+				runAllRmLIVE( false )
+				self.buildMode = 6	--BUILDING-MODE NEW FALLBACK TO WHITE AS ALL DONE
+			elseif not _BOOL or self.BBON then		--TURN OFF
 				self.BBON = false
 				runAllRmLIVE( true )
 				self.buildMode = 7					--PLAY-MODE
 				--tRetro:beginmap( tMap.hPlayerStart )
-			elseif _BOOL or not self.BBON then	--TURN ON
-				self.BBON = true
-				runAllRmLIVE( false )
-				self.buildMode = 6	--BUILDING-MODE NEW FALLBACK TO WHITE AS ALL DONE
 			end
 		end
 	elseif _target == "updateBdrColour" then		--PER-SECOND ROTATION UPDATE
