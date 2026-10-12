@@ -289,7 +289,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 				_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
 			end
 		end
-		tMap:ticToc( true, "00:00:00:0" )		--MAY NEED TO REM-OUT
+		--tMap:ticToc( true, "00:00:00:0" )		--MAY NEED TO REM-OUT, ALREADY APART OF SWITCHROOM
 		tPortHole.eccoDisplayBuff.GO = true
 		return false
 		---------------------------------------------------------

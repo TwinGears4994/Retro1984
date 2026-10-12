@@ -1,4 +1,3 @@
-bb
 author TwinGears@gmail.com
 ccmd put wear press push pull sit stand touch
 rmlevel 1000
@@ -11,11 +10,11 @@ hide down up
 +tw sit down TW load TwinGears@gmail.com 'Meditation Space'
 +tw stand up TW load TwinGears@gmail.com EarthShip R10
 rtw timer 00:00:00:1 TW clrtxt
-rtw timer 00:00:00:1 TW comm false 'Cultivate your Qi energy for 10 minutes, type stand up when done.'
+rtw timer 00:00:00:1 TW comm false 'Cultivate your Qi energy for 10 minutes, type stand up or move to quit timer training loop. NOTICE: this training can help you acheive an OOBE much easier & remember when you arrive at a different data steam, THERE-IS-NO-FEAR-TEST! Who said the fear you felt was yours? Your new data steam includes a telepathic environment - paying attention yet or paying for your distraction(s)?'
 rtw timer 00:00:00:1 TW playsound 'FriedEggs014AlmostBell.ogg'
 rtw timer 00:00:00:3 TW playsound 'BongRing002.ogg'
 rtw timer 00:10:00:0 TW clrtxt
-rtw timer 00:10:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no movements, no intentions anywhere, no leaking internal noise - stillness.'
+rtw timer 00:10:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no movements, no intentions anywhere, no leaking internal noise - be absolutely still.'
 rtw timer 00:10:00:0 TW playsound 'BassSlide7.ogg'
 rtw timer 00:20:00:0 TW clrtxt
 rtw timer 00:20:00:0 TW comm false 'Cultivate your Qi energy for 10 minutes.'
