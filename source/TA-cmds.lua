@@ -1930,7 +1930,10 @@ end
 			local			  _rmNumA, _rmAi, _RMAx, _rmAxi = 			 0, tMap.rms.idx, false,0
 			local _RMB, _rmNumB, _rmBi, _RMBx, _rmBxi = false, 0,0, false,0
 			_rmNumA = string.match( tMap.rms[ _rmAi ].rRoomNum,"-%d+" ) or string.match( tMap.rms[ _rmAi ].rRoomNum,"%d+" ) or _rNum
-			local _dirtA = string.match( _dirt,"%a" )	-- +TRIM OFF DUPLICATES
+			local _dirtA = string.match( _dirt,"%a+" )	-- +TRIM OFF DUPLICATES
+			if _dupliDIRT then
+				_dirtA = string.match( _dirt,"%a" )
+			end
 			local _mapB = tRetro:tblClone( tMap.rms[ _rmAi ].rMap4D )
 			local _dirtMirror = nil
 			local _m = 0
