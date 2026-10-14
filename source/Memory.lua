@@ -48,11 +48,11 @@ function fPortHoleInject( _table, _target )
 		function _table:bb( _BOOL )
 			if _BOOL then							--TURN ON
 				self.BBON = true
-				runAllRmLIVE( false )
+				runAllRmLIVE( true )
 				self.buildMode = 6			--BUILDING-MODE NEW FALLBACK TO WHITE AS ALL DONE
 			elseif not _BOOL then			--TURN OFF
 				self.BBON = false
-				runAllRmLIVE( true )
+				runAllRmLIVE( false )
 				self.buildMode = 7			--PLAY-MODE
 				--tRetro:beginmap( tMap.hPlayerStart )
 			end
