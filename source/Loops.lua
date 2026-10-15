@@ -80,6 +80,7 @@ function loop3( dt )
 					tMap.hDeadTypist = { idx =1, iChar =1 }	--UNLOADING LOADED FILE DATA
 					chkRVnumFStoReport()					--FEEDBACK ON-SCREEN IF RV# ISN'T IN LIBRARY
 					removeDeadCount()							-- *** REMOVE OBJS.count == 0 FROM TABLES ***
+					--runAllRmLIVE( true )
 					addGhostTW()									-- *** GHOSTS ARE BACK AGAIN ***
 					tPortHole:bb( false )					--MAYBE ALREADY OFF AND THAT'S OKAY
 				end

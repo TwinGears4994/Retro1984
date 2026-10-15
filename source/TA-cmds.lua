@@ -1020,10 +1020,13 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 		local _objA = nil
 		if not tMap.hDataLOCKED and _cmd == "bb" then	--TYPED >> CMD CONTROL SORTING BEGINS HERE
 			if _iBool > 0 then						--NON FLIP-FLOP MODE
-				if string.lower( _tw[ _iBool ] ) == "true" 	then tPortHole:bb( true ) end
-				if string.lower( _tw[ _iBool ] ) == "false" then tPortHole:bb( false ) end
+				if string.lower( _tw[ _iBool ] ) == "true" 	then
+					tPortHole:bb( true )
+				elseif string.lower( _tw[ _iBool ] ) == "false" then 
+					tPortHole:bb( false )
+				end
 			else													--FLIP-FLOP COME BACK ;)
-				if tPortHole.BBON 		then
+				if tPortHole.BBON then
 					tPortHole:bb( false )
 				elseif not tPortHole.BBON then
 					tPortHole:bb( true )

@@ -193,13 +193,13 @@ function eventFileLoad( _author, _fileName )
 		tMap.fileName = _fileName
 		tMap:setNewMap( _author, _fileName )
 		tRetro:rmCreate( _fileName,"R1",{ m =0, x =0, y =0, z =0 },nil )
-		tMap:ticToc( true )	--,HH:MM:SS:DD
 		tMap.hDeadTypist = _tbl
 		listSounds()
 		listImages()
 		listVideos()
 		tMap.keyLogDROPIT = true
 		if not tPortHole.BBON then tPortHole:bb( true ) end
+		tMap:ticToc( true )	--,HH:MM:SS:DD
 		return true		--FEEDS tMap.deadTYPIST
 	end
 	return false
