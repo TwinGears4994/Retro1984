@@ -67,7 +67,8 @@ function loop3( dt )
 			--NEED TO CREATE OUR 1st ROOM TO GIVE MAP A STARTING POINT TO WORK WITH
 			for a = 1, #tMap.hDeadTypist do		--ANIMATE OUR DEAD-TYPIST
 				tMap.keylog = tMap.hDeadTypist[ a ]	--DON'T load FROM HERE, GHOST TW IN PLAY MODE AS BEFORE
-				if a == 33 and tMap.fileName == "Master File" then
+				if a == 8 and tMap.fileName == "Master File" then
+				--if a == 8 and tMap.fileName == "EarthShip" then
 				--if a == 30 and tMap.fileName == "0C18-DE38" then
 				--if a == 23 and tMap.fileName == "Meditation Space" then	--ADDING TIC-TOC 1980s EXERCISE TO FILE SOON
 					fu = nil											--GIVING MYSELF A LINE TO TARGET IN SPECIFIC FILE BEING TESTED
@@ -80,9 +81,8 @@ function loop3( dt )
 					tMap.hDeadTypist = { idx =1, iChar =1 }	--UNLOADING LOADED FILE DATA
 					chkRVnumFStoReport()					--FEEDBACK ON-SCREEN IF RV# ISN'T IN LIBRARY
 					removeDeadCount()							-- *** REMOVE OBJS.count == 0 FROM TABLES ***
-					--runAllRmLIVE( true )
-					addGhostTW()									-- *** GHOSTS ARE BACK AGAIN ***
 					tPortHole:bb( false )					--MAYBE ALREADY OFF AND THAT'S OKAY
+					addGhostTW()									-- *** GHOSTS ARE BACK AGAIN ***
 				end
 			end
 			-- *** TIMING LOOP ***								MEANS DEAD-TYPIST HAS BEEN LOADED, RUN & RETIRED
