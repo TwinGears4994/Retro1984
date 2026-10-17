@@ -1961,8 +1961,8 @@ end
 				tMap.rms[ _rmAi ].rExits = tRetro:rmAddExit( tMap.rms[ _rmAi ].rExits, _dirtA .._rmNumB )
 			end
 			--ROOM-B NEED TO BE ADDED IF IT DOESN'T EXIST
-			if _SUDO and not tMap.rmNOEXITS and not _RMB then
-				_dirtMirror = mirrorDirt( _rmNumA, _N,_S,_W,_E,_D,_U )
+			if _SUDO and not _RMB then
+				if not tMap.rmNOEXITS then _dirtMirror = mirrorDirt( _rmNumA, _N,_S,_W,_E,_D,_U ) end
 				tRetro:rmCreate( tMap.rms[ _rmAi ].rLabel, "R".. _rmNumB, _mapB, _dirtMirror )	--CREATE ROOM
 				tRetro:switchRoom( _mapB )
 				return true
