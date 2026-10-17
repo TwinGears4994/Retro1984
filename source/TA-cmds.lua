@@ -279,7 +279,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 			elseif ( _iR < _iD and _iR ~= 0 ) or _iD == 0 then
 				local _rmEXISTS, _, _mapB, _rmIdxB = isRmInSTORY( _tw[ _iR ] )
 				--_mapEXISTSB, _rmNumB, _mapB, _rmIdxB
-				if _rmEXISTS then
+				if _rmEXISTS and tPortHole.BBON then
 					tRetro:switchRoom( _mapB )
 				end
 			end
