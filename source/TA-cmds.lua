@@ -435,7 +435,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 			return false
 			--NEED CMD CONTROL TO MAKE SURE +M ISN'T A FALSE POSITIVE
 			--	_tw[1] == ""
-		elseif _cmd == "+m" or _cmd == "-m" then		--_SUDO ALREADY APPLIED
+		elseif ( _cmd == "+m" or _cmd == "-m" ) then		--_SUDO ALREADY APPLIED
 			local _mapEXISTS, _rmNumB, _mapB, _rmIdxB = false, nil, tRetro:tblClone( tMap.rms[ tMap.rms.idx ].rMap4D ),nil
 			--tMap.rmNOEXITS
 			if _cmd == "+m" then						--nextRoomNum() >> nextRoomMap4D() WHICH DOES CLONE THE MAP TABLE
@@ -443,7 +443,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 			elseif _cmd == "-m" then --and _RM then
 				_mapEXISTS, _rmNumB, _mapB, _rmIdxB = tRetro:nextRoomNum( tMap.rms[ tMap.rms.idx ].rRoomNum, _mapB, -1 )
 			end
-			if not _mapEXISTS then					--CREATE ROOM
+			if not _mapEXISTS and _SUDO and not tMap.rmNOEXITS then					--CREATE ROOM
 				tRetro:rmCreate( tMap.rms[ tMap.rms.idx ].rLabel, "R".. _rmNumB, _mapB, nil )
 			end
 			tRetro:switchRoom( _mapB )
