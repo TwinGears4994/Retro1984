@@ -388,11 +388,8 @@ function keyLogInjectCmds()	--INJECT BACKWARDS BECAUSE WE ARE DROPPING INTO 1st 
 	keyLogCmdClean( "rvnum" )
 	_text = "rvnum " ..tostring( tMap.hRVnum )
 	table.insert( tMap.tKeyLogHistory,1, _text )
-	
-	keyLogCmdClean( "bb" )
-	table.insert( tMap.tKeyLogHistory,1, "bb" )
-	
-	--WHAT ABOUT playerstart AT THE END OF THE FILE, THUS TRIGGER BB TO FLIP TO PLAY MODE OR STAY IN BUILD MODE
+	--keyLogCmdClean( "bb" )		--NO LONGER NEED BY DEFAULT IN FILE
+	--table.insert( tMap.tKeyLogHistory,1, "bb" )
 end
 
 function keyLogCmdClean( _cmd )
