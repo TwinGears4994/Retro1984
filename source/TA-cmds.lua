@@ -1938,7 +1938,7 @@ end
 				_dirtA = string.match( _dirt,"%a" )
 			end
 			local _mapB = tRetro:tblClone( tMap.rms[ _rmAi ].rMap4D )
-			local _dirtMirror = nil
+			local _dirtMirror = mirrorDirt( _rmNumA, _N,_S,_W,_E,_D,_U )
 			local _m = 0
 			--ROOM-A EXIT CHECKING - CORRECT _exitLoops IF EXACT EXIT DOESN'T EXIST
 			_RMAx, _rmAxi, _m = isExitInTbl( tMap.rms[ _rmAi ].rExits, _dirtA, _exitLoops )
@@ -1966,13 +1966,19 @@ end
 				tRetro:rmCreate( tMap.rms[ _rmAi ].rLabel, "R".. _rmNumB, _mapB, _dirtMirror )	--CREATE ROOM
 				tRetro:switchRoom( _mapB )
 				return true
-			elseif _RMB then							--ROOM-B EXISTS BUT DOES THE EXIT EXIST?
-				if #tMap.rms[ _rmAi ].rExits >0 then
-					_RMAx, _rmAxi, _m = isExitInTbl( tMap.rms[ _rmAi ].rExits, _dirtA, _exitLoops )
-				elseif _SUDO and not tMap.rmNOEXITS and #tMap.rms[ _rmAi ].rExits == 0 then		--ADD EXIT-A
-					tMap.rms[ _rmAi ].rExits = tRetro:rmAddExit( tMap.rms[ _rmAi ].rExits, _dirtA .._rmNumB )
-				end
+				
+			elseif _RMB then							--ROOM-B ALREADY EXISTS, CHECK EXIT WHEN WE ARRIVE - SAME FOR R# JUMPING
+				 
 				tRetro:switchRoom( _mapB )
+				if #tMap.rms[ _rmAi ].rExits >0 then
+					_RMAx, _rmAxi, _m = isExitInTbl( tMap.rms[ _rmAi ].rExits, _dirtMirror, _exitLoops )
+					if _SUDO and not tMap.rmNOEXITS and not _RMAx then
+						tMap.rms[ tMap.rms.idx ].rExits = tRetro:rmAddExit( tMap.rms[ tMap.rms.idx ].rExits, _dirtMirror )
+					end
+				elseif _SUDO and not tMap.rmNOEXITS and #tMap.rms[ _rmAi ].rExits == 0 then		--ADD EXIT
+					tMap.rms[ tMap.rms.idx ].rExits = tRetro:rmAddExit( tMap.rms[ tMap.rms.idx ].rExits, _dirtMirror ) -- _dirtA .._rmNumB )
+				end
+				
 				return true
 			end
 		end
