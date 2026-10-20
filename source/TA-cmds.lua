@@ -273,20 +273,37 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 	-- JUMP ABOUT MAPING LOGIC (Dirt/Room)
 	---------------------------------------------------------
 	if ( not _bCMD and not _pCMD and not _cCMD ) and ( _iD ~= 0 or _iR ~= 0 ) then
-		while _iD ~= 0 or _iR ~= 0 do			--LOWEST INDEX FIRST
-			if ( _iD < _iR and _iD ~= 0 ) or _iR == 0 then	--( _iD < _iR and _iR ~= 0 ) or _iR == 0
-				runCmdDirt( _tw[ _iD ], _SUDO, nil )	--DIRT "USER"
-			elseif ( _iR < _iD and _iR ~= 0 ) or _iD == 0 then
-				local _rmEXISTS, _, _mapB, _rmIdxB = isRmInSTORY( _tw[ _iR ] )
-				--_mapEXISTSB, _rmNumB, _mapB, _rmIdxB
-				if _rmEXISTS and tPortHole.BBON then
-					tRetro:switchRoom( _mapB )
-				end
-			end
-			if ( _iD < _iR and _iD ~=0 ) or _iR == 0 then --_iB,_iP,_iC, _iD,_iR, _iNum,_iObj,_iTime, _iSound,_iBool, _bCMD,_pCMD,_cCMD, _cmd, _idx
+		while _iD ~= 0 or _iR ~= 0 do									--LOWEST INDEX FIRST
+			if _iD ~= 0 and _iR == 0 then	--( _iD < _iR and _iR ~= 0 ) or _iR == 0
+				runCmdDirt( _tw[ _iD ], _SUDO, nil )			--R# WITHOUT DIRT
 				_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iD )
-			elseif ( _iR < _iD and _iR ~= 0 ) or _iD == 0 then
+			elseif _iR ~= 0 and _iD == 0 then
+				local _rmEXISTS, _, _mapB, _rmIdxB = isRmInSTORY( _tw[ _iR ] )
+				tRetro:switchRoom( _mapB )
 				_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
+			elseif _iR ~= 0 and _iD ~= 0 then						--R# WITH DIRT THUS POSSIBLE EXITS TO ADD
+				local _rmEXISTS, _, _mapB, _rmIdxB = isRmInSTORY( _tw[ _iR ] )
+				local _DIRT, _dirt, _singleDIRT, _dirtNUM, _dupliDIRT, _N,_S,_W,_E,_D,_U, _exitLoops, _rNum = isDIRT( _tw[ _iD ] )
+				local _dirtMirror = mirrorDirt( tMap.rms[ tMap.rms.idx ].rRoomNum, _N,_S,_W,_E,_D,_U )
+				if _rmEXISTS and tPortHole.BBON then
+					if not tMap.rmNOEXITS and #tMap.rms[ tMap.rms.idx ].rExits > 0 then
+						--CHECK FOR MATCHING EXIT ELSE ADD EXIT
+						local _RMAx, _rmAxi, _m = isExitInTbl( tMap.rms[ tMap.rms.idx ].rExits, _dirt, _exitLoops )
+						if not tMap.rmNOEXITS and not _RMAx then
+							local _exitA = _dirt .. string.match( _tw[ _iR ], "%d+" )		--string.match(tMap.rms[ tMap.rms.idx ].rRoomNum,"%d+")
+							tMap.rms[ tMap.rms.idx ].rExits = tRetro:rmAddExit( tMap.rms[ tMap.rms.idx ].rExits, _exitA )
+						end
+					end
+					tRetro:switchRoom( _mapB )
+					if not tMap.rmNOEXITS and #tMap.rms[ tMap.rms.idx ].rExits > 0 then
+						tMap.rms[ tMap.rms.idx ].rExits = tRetro:rmAddExit( tMap.rms[ tMap.rms.idx ].rExits, _dirtMirror ) -- _dirtA .._rmNumB )
+					end
+				end
+				if _iR > _iD then
+					_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iR )
+				elseif _iR < _iD then
+					_,_,_, _iD,_iR, _iNum,_iObj, _iTime, _iSound,_iBool, _,_,_, _, _idx = idxEccoCmdControl( _tw, _iD )
+				end
 			end
 		end
 		--tMap:ticToc( true, "00:00:00:0" )		--MAY NEED TO REM-OUT, ALREADY APART OF SWITCHROOM
@@ -1019,6 +1036,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 		--_runGHOST = true
 		local _objA = nil
 		if not tMap.hDataLOCKED and _cmd == "bb" then	--TYPED >> CMD CONTROL SORTING BEGINS HERE
+			tMap.keyLogDROPIT = true
 			if _iBool > 0 then						--NON FLIP-FLOP MODE
 				if string.lower( _tw[ _iBool ] ) == "true" 	then
 					tPortHole:bb( true )
@@ -2065,6 +2083,7 @@ end
 	end
 
 	function mirrorDirt( _pastRmNum, _N,_S,_W,_E,_D,_U )
+		_pastRmNum = string.match( _pastRmNum, "%d+" )
 		local _dirt = "" --string.match( _path,"%a" )
 		if _N then
 			_dirt = _dirt .."S"
