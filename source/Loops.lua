@@ -73,7 +73,7 @@ function loop3( dt )
 				--if a == 23 and tMap.fileName == "Meditation Space" then	--ADDING TIC-TOC 1980s EXERCISE TO FILE SOON
 					fu = nil											--GIVING MYSELF A LINE TO TARGET IN SPECIFIC FILE BEING TESTED
 				end
-				if tPortHole.BBON then			--AUTOMATIC <RETURN>
+				if tPortHole.BBON then					--AUTOMATIC <RETURN>
 					love.keypressed( "return" )		--AUTOMATED <RETURN> IF BUILD-MODE-ON & IN-FILE
 				end
 				if a == #tMap.hDeadTypist then	--LAST LINE TO PROCESS
@@ -85,6 +85,9 @@ function loop3( dt )
 					addGhostTW()									-- *** GHOSTS ARE BACK AGAIN ***
 				end
 			end
+			--BEGINMAP ISN'T A DEFAULT CMD IN DEAD-TYPIST YET SO...
+			tRetro:beginmap( tMap.hPlayerStart )
+			
 			-- *** TIMING LOOP ***								MEANS DEAD-TYPIST HAS BEEN LOADED, RUN & RETIRED
 		elseif tMap.oneTenthSEC then				-- *** 1/10th SECOND ***
 			_bFLAG = allTWtimerChk()					--WHEN THE DEAD-TYPIST IS DONE *** TW-TIMER CHECK ***
