@@ -49,7 +49,7 @@ tMap.deadTypist.idx		--AUTOBUILD OUR
 tMap.tw
 ]]
 
-reVision = "A.3.031"
+reVision = "A.3.032"
 --  SCREEN SIZE & TESTING SCREEN SIZE - thus must scale
 love.graphics.setDefaultFilter( "nearest", "nearest" )
 love.window.setFullscreen( false, "desktop" )  --DEFAULT true RUNNING MODE FOR THIS EDUCATIONAL GAME

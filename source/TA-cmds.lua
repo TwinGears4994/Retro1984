@@ -70,15 +70,14 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 		elseif isRoomNum( _tblKeylog[ iKey ] ) then					--R1001 OR R-1001 WORKS
 			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "room", _iCmdCtl, _ccTbl[1] )		--ROOM FOUND
 		elseif isBuildCMD( _tblKeylog[ iKey ] ) then
-			if _tblKeylog[1] == "repeat" then			--EXTRA PROCESSING IF WE FIND "repeat" - LETS MOVE THIS UP
+			if _tblKeylog[1] == "repeat" then			--EXTRA PROCESSING IF WE FIND "repeat"
 				_ccTbl = { idx = 0 }	--WILL INSERT ENTIRE TABLE, SEE IF UPDATES MESS UP EARILER INJECTIONS DATA WISE!
 				--_iKey = 2		--TIMER WINDOW UP NEXT, IS USEFUL INSIDE ORGINAL LOOP
 				--CLONE _tblKeylog[1]
 				local _tblStep = tRetro:tblClone( _tblKeylog )
 				table.remove( _tblStep, 1 )		--REMOVE 1st 2 SECTIONS
-				table.remove( _tblStep, 1 )		--WOULD LIKE TO KNOW TIMER WAS NEXT OR CMD WAS NEXT!
 				local _tblRepeat = tRetro:tblClone( _tblStep )
-				_tblRepeat[3] = "00:00:00:0"
+				--_tblRepeat[3] = "00:00:00:0"	--NOW POSITION [5]
 				local _REPEAT = true
 				--(SOURCE KEYLOG TIME WINDOW) NOW TIME OF HOUR:MIN:SEC:D + ROOM TIME START OF TIME WINDOW
 				--END OF TIME WINDOW IS CURRENT START + TIMER TIME
