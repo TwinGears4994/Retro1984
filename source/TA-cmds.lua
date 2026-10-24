@@ -95,9 +95,10 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 				else
 					_REPEAT = false
 				end
+				_tblCopy = bldCmdControl( _tblCopy )
 				while _REPEAT do
 					_curTime = addTime( _curTime, _stepTiming )
-					_tblCopy[ 3 ] = _curTime
+					_tblCopy[ 4 ] = _curTime
 					if _curTime <= _stopTime then
 						local _tbl = tRetro:tblClone( _tblCopy )
 						table.insert( _ccTbl ,_tbl )
@@ -107,28 +108,29 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 					end
 				end
 				--COULD RUN A LOOP OF FRACTAL SELF, UNLOADING OUR NEST OF ITEMS THROUGH bldCmdControl( TBL[NEST] )
-				if #_ccTbl > 0 then
-					_tbl = bldCmdControl( _ccTbl[ 1 ] )	--ADD CCMD CONTROL FOR 1 LINE TO BE COPIED FOR THE REST
-					_tbl = _tbl[1]											--REMOVE NEST AND LOCATE ALL DATA AFTER "TW"
-					local _iTW = { 1 }									--LIST OF INDEXES TO COPY CCMD ACROSS ALL NESTED DATA
-					for a = 1, #_tbl do
-						if string.find( _tbl[ a ], "TW" ) then
-							table.insert( _iTW, a +1 )
-						end
-					end
-					for b = 1, #_ccTbl do	--PUT IN ALL THE MISSING CCMD DATA
-						for c = 1, #_iTW do
-							if c == 1 then
-								table.insert( _ccTbl[ b ], _iTW[ c ], _tbl[ c ] )
-							else
-								_ccTbl[ b ][ _iTW[ c ] ] =  _tbl[ _iTW[ c ] ]
-							end
-						end
-					end
-				end
-				break
+--				if #_ccTbl > 0 then
+--					_tbl = bldCmdControl( _ccTbl[ 1 ] )	--ADD CCMD CONTROL FOR 1 LINE TO BE COPIED FOR THE REST
+--					_tbl = _tbl[1]											--REMOVE NEST AND LOCATE ALL DATA AFTER "TW"
+--					local _iTW = { 1 }									--LIST OF INDEXES TO COPY CCMD ACROSS ALL NESTED DATA
+--					for a = 1, #_tbl do
+--						if string.find( _tbl[ a ], "TW" ) then
+--							table.insert( _iTW, a +1 )
+--						end
+--					end
+--					for b = 1, #_ccTbl do	--PUT IN ALL THE MISSING CCMD DATA
+--						for c = 1, #_iTW do
+--							if c == 1 then
+--								table.insert( _ccTbl[ b ], _iTW[ c ], _tbl[ c ] )
+--							else
+--								_ccTbl[ b ][ _iTW[ c ] ] =  _tbl[ _iTW[ c ] ]
+--							end
+--						end
+--					end
+--				end
+				--break
 				--iKey = #_tblKeylog	--IF IT WAS A WHILE LOOP THIS WOULD WORK
 			else
+				--_tbl = bldCmdControl( _ccTbl[ 1 ] )
 				_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "bcmd", _iCmdCtl, _ccTbl[1] )	--BUILD CMD FOUND
 			end
 		elseif isPlayCMD( _tblKeylog[ iKey ] ) then
