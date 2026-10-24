@@ -57,7 +57,7 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 	local _ccTbl = { idx = 0, {} }
 	local _CCMD = false
 	for iKey =1, #_tblKeylog do
-		if _tblKeylog[1] == "ccmd" then
+		if _tblKeylog[ 1 ] == "ccmd" then
 			_CCMD = true
 		end
 		if "TW" == _tblKeylog[ iKey ] then
@@ -66,25 +66,40 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 			--NEXT "TW" USEFUL IF WE ARE TO CCAT( after COMM T/F)
 			--_split = string.find( _tblKeylog[1],"TW", _iKey )
 		elseif " " == _tblKeylog[ iKey ] then
-			table.insert( _ccTbl[1], "" )
+			table.insert( _ccTbl[ 1 ], "" )
 		elseif isRoomNum( _tblKeylog[ iKey ] ) then					--R1001 OR R-1001 WORKS
-			_ccTbl[1] = sortTW( _tblKeylog[ iKey ], "room", _iCmdCtl, _ccTbl[1] )		--ROOM FOUND
+			_ccTbl[ 1 ] = sortTW( _tblKeylog[ iKey ], "room", _iCmdCtl, _ccTbl[ 1 ] )		--ROOM FOUND
 		elseif isBuildCMD( _tblKeylog[ iKey ] ) then
-			if _tblKeylog[1] == "repeat" then			--EXTRA PROCESSING IF WE FIND "repeat"
-				_ccTbl = { idx = 0 }	--WILL INSERT ENTIRE TABLE, SEE IF UPDATES MESS UP EARILER INJECTIONS DATA WISE!
-				--_iKey = 2		--TIMER WINDOW UP NEXT, IS USEFUL INSIDE ORGINAL LOOP
-				--CLONE _tblKeylog[1]
-				local _tblStep = tRetro:tblClone( _tblKeylog )
-				table.remove( _tblStep, 1 )		--REMOVE 1st 2 SECTIONS
-				local _tblRepeat = tRetro:tblClone( _tblStep )
-				--_tblRepeat[3] = "00:00:00:0"	--NOW POSITION [5]
-				local _REPEAT = true
-				--(SOURCE KEYLOG TIME WINDOW) NOW TIME OF HOUR:MIN:SEC:D + ROOM TIME START OF TIME WINDOW
-				--END OF TIME WINDOW IS CURRENT START + TIMER TIME
+			if _tblKeylog[ 1 ] == "repeat" then			--CREATES LARGE BATCH OF TRIPWIRES
+				_ccTbl = { idx = 0 }
+				local _curTime = nil								--START/STOP/STEP TIME ALWAYS IN HOUR:MIN:SEC:D
+				local _stopTime = nil
+				local _stepTiming = nil
+				local _tblCopy = tRetro:tblClone( _tblKeylog )
+				local _REPEAT = false
+				table.remove( _tblCopy, 1 )					--REMOVE CMD repeat
+				if isTime( _tblCopy[ 1 ] ) then				--2 TIME(S) ASSUMED
+					_curTime = _tblCopy[ 1 ] 						--SET START TIME
+					table.remove( _tblCopy, 1 )
+					_REPEAT = true
+				end
+				if isTime( _tblCopy[ 1 ] ) then				--SET STOP TIME
+					_stopTime = _tblCopy[ 1 ]
+					table.remove( _tblCopy, 1 )
+				else
+					_stopTime = _curTime							--RESET AS ONLY 1 TIME GIVEN
+					_curTime = "00:00:00:0"
+				end
+				if isTime( _tblCopy[ 3 ] ) then
+					_stepTiming = _tblCopy[ 3 ]
+				else
+					_REPEAT = false
+				end
 				while _REPEAT do
-					_tblRepeat[3] = addTime( _tblStep[3], _tblRepeat[3] )
-					if _tblRepeat[3] <= _tblKeylog[2] then
-						local _tbl = tRetro:tblClone( _tblRepeat )
+					_curTime = addTime( _curTime, _stepTiming )
+					_tblCopy[ 3 ] = _curTime
+					if _curTime <= _stopTime then
+						local _tbl = tRetro:tblClone( _tblCopy )
 						table.insert( _ccTbl ,_tbl )
 						--_tblChanged = tRetro:tblClone( _tblRepeat )
 					else
@@ -1420,9 +1435,9 @@ function addGhostTW()
 	tPortHole.ghosts = tRetro:tblClone( tMap.rms )
 end
 
-	function addTime( _tStep, _tFrom )	--true, _hour, _min, _sec, _dec
+	function addTime( _tCurrentTime, _tStep )	--true, _hour, _min, _sec, _dec
 		local _TIMEs, _hourS, _minS, _secS, _decS = isTime( _tStep )	--STEP/WALK
-		local _TIMEf, _hourF, _minF, _secF, _decF = isTime( _tFrom )	--FROM THIS POINT
+		local _TIMEf, _hourF, _minF, _secF, _decF = isTime( _tCurrentTime )	--FROM THIS POINT
 		_hourF = tMap.rmHours + _hourF + _hourS or 0			--STARTING TIME
 		_minF = tMap.rmMinutes + _minF + _minS or 0
 		_secF = tMap.rmSeconds + _secF + _secS or 0
