@@ -1,30 +1,35 @@
 author TwinGears@gmail.com
 ccmd put wear press push pull sit stand touch
 rmlevel 1000
-setplayerstart 0
+setplayerstart R0
 maplock true
 maplabel 'Meditation Time'
-rmlabel 'Golden Dust Space'
+rmlabel 'Floating Golden Dust Space'
 untake 'meditation cushion' up down
 hide down up
 +tw sit down TW load TwinGears@gmail.com 'Meditation Space'
 +tw stand up TW load TwinGears@gmail.com EarthShip R10
 rtw timer 00:00:00:1 TW clrtxt
-rtw timer 00:00:00:1 TW comm false 'Cultivate your Qi energy for 10 minutes, type stand up or move to quit timer training loop. NOTICE: this training can help you acheive an OOBE much easier & remember when you arrive at a different data steam, THERE-IS-NO-FEAR-TEST! Who said the fear you felt was yours? Your new data steam includes a telepathic environment - paying attention yet or paying for your distraction(s)?'
+rtw timer 00:00:00:1 TW comm false 'Cultivate your Qi energy for 10 minutes, type stand up or move to quit timer training loop. NOTICE: this training can help you acheive an OOBE much easier & remember when you arrive at that different data steam, THERE-IS-NO-FEAR-TEST! Who said the fear you felt was yours? Your new data steam includes a telepathic environment. Paying attention yet or paying for your distraction(s)?'
 rtw timer 00:00:00:1 TW playsound 'FriedEggs014AlmostBell.ogg'
 rtw timer 00:00:00:3 TW playsound 'BongRing002.ogg'
+repeat 00:00:01:0 00:09:59:0 rtw timer 00:00:02:0 TW playsound 'ClockTIC.ogg'
 rtw timer 00:10:00:0 TW clrtxt
-rtw timer 00:10:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no movements, no intentions anywhere, no leaking internal noise - be absolutely still.'
+rtw timer 00:10:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no movements, no intentions anywhere, no leaking internal noise - be absolutely still!'
 rtw timer 00:10:00:0 TW playsound 'BassSlide7.ogg'
+
 rtw timer 00:20:00:0 TW clrtxt
 rtw timer 00:20:00:0 TW comm false 'Cultivate your Qi energy for 10 minutes.'
 rtw timer 00:20:00:0 TW playsound 'BongRing002.ogg'
+repeat 00:20:01:0 00:29:59:0 rtw timer 00:00:03:0 TW playsound 'Clock2TicECCO.ogg'
 rtw timer 00:30:00:0 TW clrtxt
 rtw timer 00:30:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no movements, no intentions anywhere, no leaking internal noise - stillness.'
 rtw timer 00:30:00:0 TW playsound 'BassSlide6.ogg'
+
 rtw timer 00:40:00:0 TW clrtxt
 rtw timer 00:40:00:0 TW comm false 'Cultivate your Qi energy for 10 minutes.'
 rtw timer 00:40:00:0 TW playsound 'BongRing002.ogg'
+repeat 00:40:01:0 00:49:59:0 rtw timer 00:00:03:0 TW playsound 'ClockTIC.ogg'
 rtw timer 00:50:00:0 TW clrtxt
 rtw timer 00:50:00:0 TW comm false 'Now sit absolutly still upright for 10 minutes, no movements, no intentions anywhere, no leaking internal noise - stillness.'
 rtw timer 00:50:00:0 TW playsound 'BassSlide3.ogg'

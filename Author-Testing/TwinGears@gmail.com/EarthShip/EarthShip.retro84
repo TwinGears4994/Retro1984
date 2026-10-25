@@ -6,13 +6,13 @@ ccmd press push
 samecmd touch press push
 rmlabel 'OUTSIDE-WALKING-PATH'
 untake 'chair' down
-+ 10 flies true true
-repeat 00:00:15:0 +tw timer 00:00:01:0 TW omove 90 fly 99
++ 2 Bee true true
+repeat 00:00:00:0 00:10:00:0 +tw timer 00:00:03:0 TW omove 75 Bee 75 Bee04.ogg
 hide down
 +tw look chair TW comm false 'It is a green cheap outdoor camping chair - type sit down to use OBJECT.'
 +tw sit down TW comm false 'Found something hiding in this chair which makes it even more uncomfortable than it already is, hmm found a dusty item that has not seen the light of day in a while Eh.'
-+tw sit down TW timer 00:00:02:5 TW unhide tablet
-+tw sit down TW timer 00:00:02:5 TW comm false 'Lets open the OBJECT - type open tablet'
++tw sit down TW timer 00:00:02:0 TW unhide tablet
++tw sit down TW timer 00:00:02:0 TW comm false 'Lets open the OBJECT - type open tablet'
 n
 rmlabel 'Glass Dome Coat & Shoe Area'
 untake benches 'Circular Coat Rack'
