@@ -68,7 +68,7 @@ function loop3( dt )
 			for a = 1, #tMap.hDeadTypist do		--ANIMATE OUR DEAD-TYPIST
 				tMap.keylog = tMap.hDeadTypist[ a ]	--DON'T load FROM HERE, GHOST TW IN PLAY MODE AS BEFORE
 				--if a == 8 and tMap.fileName == "Master File" then
-				if a == 36 and tMap.fileName == "EarthShip" then
+				if a == 10 and tMap.fileName == "EarthShip" then
 				--if a == 30 and tMap.fileName == "0C18-DE38" then
 				--if a == 23 and tMap.fileName == "Meditation Space" then	--ADDING TIC-TOC 1980s EXERCISE TO FILE SOON
 					fu = nil											--GIVING MYSELF A LINE TO TARGET IN SPECIFIC FILE BEING TESTED

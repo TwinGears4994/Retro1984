@@ -95,7 +95,8 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 				else
 					_REPEAT = false
 				end
-				_tblCopy = bldCmdControl( _tblCopy )
+				local _tbl = bldCmdControl( _tblCopy )
+				_tblCopy = _tbl[1]
 				while _REPEAT do
 					_curTime = addTime( _curTime, _stepTiming )
 					_tblCopy[ 4 ] = _curTime
