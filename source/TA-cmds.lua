@@ -1447,16 +1447,16 @@ end
 		_decF = tMap.rmFraction + _decF + _decS or 0
 		--isTime() ABSTRACT TIME AND TIME ARE THE SAME TO FUNCTION, MATHFLOOR FOR DEALING WITH THAT ABSTRACT
 		if _decF > 9 then
-			_secF = _secF + 1 + math.floor( (_decF-9)/10 )
-			_decF = 0
+			_decF = decF -10
+			_minF = _minF +1
 		end
 		if _secF > 59 then
-			_minF = _minF + 1 + math.floor( (_secF-59)/60 )
-			_secF = 0
+			_secF = _secF -60
+			_minF = _minF +1
 		end
 		if _minF > 59 then
-			_hourF = _hourF + 1 + math.floor( (_minF-59)/60 )
-			_minF = 0
+			_minF = _minF -60
+			_hourF = _hourF +1
 		end
 		if _hourF > 24 then
 			_hourF = _hourF -24
