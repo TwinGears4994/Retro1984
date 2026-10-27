@@ -24,7 +24,6 @@ rmlabel 'Bright Room'
 +tw eat 'fortune cookie' TW comm true '<READS>: Is this your nightmare because i do not recognize it? Go ahead look at your CMDS again with history <UP> & <DOWN> arrows.'
 +tw eat 'fortune cookie' TW comm true '<READS>: If it is not your experience, its not your truth. Tom Campbell'
 +tw eat 'fortune cookie' TW comm true '<READS>: Experience is everything. Self'
-fill 'cookie jar' 8 'green cookies' 12 'fortune cookie'
 +tw eat 'fortune cookie' TW timer 00:00:02:0 TW load TwinGears@gmail.com 'Common Grow Pool' R0
 +tw eat 'green cookies' TW timer 00:00:02:0 TW load TwinGears@gmail.com EarthShip r10
 rtw timer 00:00:14:0 TW comm false 'i am heading over to the EarthShip...'

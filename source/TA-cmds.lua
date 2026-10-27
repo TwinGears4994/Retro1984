@@ -1159,7 +1159,7 @@ function runTWaction( _tw, _SUDO ) --6 LOCATIONS: "RmTheater","RmTimer","ObjMatc
 							_dstTbl = tMap.rms[ tMap.rms.idx ].rObj[ _AiRm ]
 						end
 					end
-					if type( _scrTbl ) == "table" and not _scrTbl.ONBOARD then
+					if type( _scrTbl ) == "table" and type( _dstTbl ) == "table" and not _scrTbl.ONBOARD then
 						_scrTbl, _dstTbl = tRetro:moveItem( false, _scrTbl, _dstTbl, _num, _cmd )
 					end
 				end
