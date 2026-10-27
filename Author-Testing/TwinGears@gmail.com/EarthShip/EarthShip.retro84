@@ -46,7 +46,7 @@ open 'cookie jar'
 +tw eat 'fortune cookies' TW comm true '<READS>: Holy Qi packing energy cookie treat that was good!'
 +tw eat 'fortune cookies' TW comm true '<READS>: If it is not your experience, its not your truth. Tom Campbell'
 +tw eat 'fortune cookies' TW comm true '<READS>: Experience is everything. Self'
-fill 'cookie jar' 7 'green cookies' 3 'fortune cookies'
+fill 'cookie jar' 7 'fortune cookies' 3 'green cookies'
 
 w
 rmlabel 'Living Room'
