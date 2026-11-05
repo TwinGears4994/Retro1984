@@ -71,7 +71,7 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 			_ccTbl[ 1 ] = sortTW( _tblKeylog[ iKey ], "room", _iCmdCtl, _ccTbl[ 1 ] )		--ROOM FOUND
 		elseif isBuildCMD( _tblKeylog[ iKey ] ) then
 			if _tblKeylog[ 1 ] == "repeat" then			--CREATES LARGE BATCH OF TRIPWIRES
-				_ccTbl = { idx = 0 }
+				_ccTbl = { idx = 0, "from", "the" }
 				local _curTime = nil								--START/STOP/STEP TIME ALWAYS IN HOUR:MIN:SEC:D
 				local _stopTime = nil
 				local _stepTiming = nil

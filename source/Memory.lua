@@ -216,7 +216,7 @@ function funcInject( _table, _target )	--{ tRetro }
 	if _target == "setPlayCmds" then
 		function _table:setPlayCmds()
 			--ADD THE CUSTOM CMDS THAT ARE PLAYING COMMANDS - KEEP COPY SEPERATE FOR EASY SAVING TO FILE
-      self.playCmds = { idx =0,"take","place","drop","eat","drink","consume",
+      self.playCmds = { idx =0,"eat","drink","consume","take","place","drop",
 			"on","off","open","close","help","unpack","pack",
 			"fill","empty",						--PLACE OBJ INSIDE OBJ
 			"bb",											--BB T/F NOW NEEDED AS FLIP-FLOP CODE GONE
@@ -287,7 +287,7 @@ function funcInject( _table, _target )	--{ tRetro }
 		end
 	elseif _target == "setCustomCmds" then
 		function _table:setCustomCmds()
-			self.hCCmds = { idx = 0 }		--CUSTOM COMMANDS LOADED FROM FILE STORY HEADER
+			self.hCCmds = { idx = 0, "from","the" }		--CUSTOM COMMANDS LOADED FROM FILE STORY HEADER
 		end
 		-- *** ROOM CHANGES ***
   elseif _target == "rmCreate" then
