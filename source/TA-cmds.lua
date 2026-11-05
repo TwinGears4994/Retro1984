@@ -71,7 +71,7 @@ function bldCmdControl( _tblKeylog )  --CONVERT PLAYERS TEXT INTO TRIPWIRE PROCE
 			_ccTbl[ 1 ] = sortTW( _tblKeylog[ iKey ], "room", _iCmdCtl, _ccTbl[ 1 ] )		--ROOM FOUND
 		elseif isBuildCMD( _tblKeylog[ iKey ] ) then
 			if _tblKeylog[ 1 ] == "repeat" then			--CREATES LARGE BATCH OF TRIPWIRES
-				_ccTbl = { idx = 0, "from", "the" }
+				_ccTbl = { idx = 0 }	--, "from", "the" }
 				local _curTime = nil								--START/STOP/STEP TIME ALWAYS IN HOUR:MIN:SEC:D
 				local _stopTime = nil
 				local _stepTiming = nil
@@ -149,7 +149,7 @@ function sortTW( _word, _type, _iCmdCtl, _ccTbl ) --"cmd","obj","room","dirt","#
 		-- *** EXPANDING TRIPWIRES STORAGE TABLE ***
 		local _iWalk = #tMap.tw
 		--PROCESS 2 PARTS OR CONTINUE TO EXTEND TABLE?
-		if #_ccTbl < 2 then											--LESS THAN 2 VALUES
+		if #_ccTbl < 2 then												--LESS THAN 2 VALUES
 			table.insert( _ccTbl, "" )							--ADD TRIPWIRE CMD VALUE SLICE
 			table.insert( _ccTbl, "NONE" )					--ADD ANOTHER TRIPWIRE VALUE
 		elseif _ccTbl[ _iWalk ] ~= "NONE" then
@@ -157,12 +157,12 @@ function sortTW( _word, _type, _iCmdCtl, _ccTbl ) --"cmd","obj","room","dirt","#
 		end
 		--EITHER 1st TWO NEED PROCESSING OR TABLE EXTENTION
 		_iWalk = #_ccTbl
-		if _ccTbl[ 2 ] == "NONE" then						--ASSIGN 1st 2 DATA PAIR VALUES
+		if _ccTbl[ 2 ] == "NONE" then							--ASSIGN 1st 2 DATA PAIR VALUES
 			_ccTbl[ _iCmdCtl ] = string.sub( _type,1,1 )	--ASSIGN TYPE 1 CHAR VALUE
-			_ccTbl[ _iWalk ] = _word           		--ASSIGN WORD VALUE
+			_ccTbl[ _iWalk ] = _word           			--ASSIGN WORD VALUE
 		elseif _ccTbl[ _iWalk ] == "NONE" then		--	+1 CMD SLICE
 			_ccTbl[ _iCmdCtl ] = _ccTbl[ _iCmdCtl ] .. string.sub( _type,1,1 )
-			_ccTbl[ _iWalk ] = _word           		--ASSIGN WORD VALUE
+			_ccTbl[ _iWalk ] = _word           			--ASSIGN WORD VALUE
 		end
 	end
 	return _ccTbl
