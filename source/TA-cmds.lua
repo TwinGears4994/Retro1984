@@ -1760,14 +1760,14 @@ end
 		if _iNum == 0 then
 			_percentObjs = 1
 		elseif _iNum ~= 0 then
-			_percentObjs = _tw[ _iNum ]/100
+			_percentObjs = _tw[ _iNum ]	/100
 		end
 		_percentObjs = tonumber( _percentObjs )
 		local _percentAction = _tw[ _iNum2 ]
 		if _iNum2 == 0 then
 			_percentAction = 99
 		elseif _iNum2 ~= 0 then
-			_percentAction = _tw[ _iNum2 ]/100
+			_percentAction = _tw[ _iNum2 ]	--/100
 		end
 		_percentAction = tonumber( _percentAction )
 
@@ -1801,12 +1801,14 @@ end
 					return true
 				end
 			elseif _BRM and not _BOBJ then
-				if math.random( 1,100 ) <= _percentAction then
+				if math.random( 1,99 ) <= _percentAction then
 					tMap.rms[ tMap.oMoveRm ].rObj[ _iAObj ].count = tMap.rms[ tMap.oMoveRm ].rObj[ _iAObj ].count -_count
 					local _tbl = tRetro:tblClone( tMap.rms[ tMap.oMoveRm ].rObj[ _iAObj ] )
 					_tbl.count = _count
 					table.insert( tMap.rms[ _idstRmB ].rObj, _tbl )
 					return true
+				else	--IF MOVE ACTION FAIL WE STILL MAKE A NOISE
+					
 				end
 			end
 		end

@@ -7,9 +7,9 @@ samecmd touch press push
 rmlabel 'OUTSIDE-WALKING-PATH'
 untake 'chair' down
 + 2 Bee true true
-repeat 00:02:00:0 00:10:00:0 +tw timer 00:00:07:0 TW omove 75 Bee 75 Bee04.ogg
+repeat 00:00:00:0 00:03:00:0 +tw timer 00:00:03:0 TW omove 75 Bee 75 Bee04.ogg
 hide down
-+tw look chair TW comm false 'It is a green cheap outdoor camping chair - type sit down to use OBJECT.'
++tw look chair TW comm false 'It is a cheap green outdoor camping chair - type sit down to use chair OBJECT.'
 +tw sit down TW comm false 'Found something hiding in this chair which makes it even more uncomfortable than it already is, hmm found a dusty item that has not seen the light of day in a while Eh.'
 +tw sit down TW timer 00:00:02:0 TW unhide tablet
 +tw sit down TW timer 00:00:02:0 TW comm false 'Lets open the OBJECT - type open tablet'
@@ -42,7 +42,6 @@ open 'cookie jar'
 +tw eat 'fortune cookies' TW comm true '<READS>: You world view is about to change. Self'
 +tw eat 'fortune cookies' TW comm true '<READS>: There is no failure, only experience. Dad'
 +tw eat 'fortune cookies' TW comm true '<READS>: You can not be faster than you are accurate. Dad'
-+tw eat 'fortune cookies' TW comm true '<READS>: Pick any friend and remove a negative program from their energy body regardless of the source. Dad'
 +tw eat 'fortune cookies' TW comm true '<READS>: Holy Qi packing energy cookie treat that was good!'
 +tw eat 'fortune cookies' TW comm true '<READS>: If it is not your experience, its not your truth. Tom Campbell'
 +tw eat 'fortune cookies' TW comm true '<READS>: Experience is everything. Self'
