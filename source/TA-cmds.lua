@@ -1380,7 +1380,7 @@ function allTWtimerChk()				--CHECK RUN ROOM & OBJS TRIPWIRE TIMERS
 					and tPortHole.ghosts[ iRm ].rObj[ iObj ].tripWire[ iTW ][2] == "timer"
 					and _currentTime == tPortHole.ghosts[ iRm ].rObj[ iObj ].tripWire[ iTW ][3] then	--trimFwdTW(  tPortHole.ghosts.rTripWire[ iRm ][3] ) then
 						tMap.oMoveRm = iRm
-						--TRIM FORWARD CAN ALSO CARRY SOUND AFTER TW AND THUS BE MISSED BELOW
+						--TRIM FORWARD CAN ALSO CARRY SOUND AFTER TW AND THUS BE MISSED BELOW AS 1 LINER
 						_bFLAG = trimFwdTW( tPortHole.ghosts[ iRm ].rObj[ iObj ].tripWire[ iTW ] )
 						if _bFLAG and tPortHole.ghosts[ iRm ].rObj[ iObj ].MOVES 
 						and tPortHole.ghosts[ iRm ].rObj[ iObj ].sound ~= "" then		--PLAY SOUND OBJ IF IT EXISTS
@@ -1807,9 +1807,12 @@ end
 					local _tbl = tRetro:tblClone( tMap.rms[ tMap.oMoveRm ].rObj[ _iAObj ] )
 					_tbl.count = _count
 					table.insert( tMap.rms[ _idstRmB ].rObj, _tbl )
+					if _iSound ~= 0 then
+						playSound( _tw[ _iSound ] )
+					end
 					return true
-				else	--IF MOVE ACTION FAIL WE STILL MAKE A NOISE
-					
+				elseif _iSound ~= 0 then	--IF MOVE ACTION FAIL WE STILL MAKE A NOISE
+					playSound( _tw[ _iSound ] )
 				end
 			end
 		end
