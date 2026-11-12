@@ -1380,6 +1380,7 @@ function allTWtimerChk()				--CHECK RUN ROOM & OBJS TRIPWIRE TIMERS
 					and tPortHole.ghosts[ iRm ].rObj[ iObj ].tripWire[ iTW ][2] == "timer"
 					and _currentTime == tPortHole.ghosts[ iRm ].rObj[ iObj ].tripWire[ iTW ][3] then	--trimFwdTW(  tPortHole.ghosts.rTripWire[ iRm ][3] ) then
 						tMap.oMoveRm = iRm
+						--TRIM FORWARD CAN ALSO CARRY SOUND AFTER TW AND THUS BE MISSED BELOW
 						_bFLAG = trimFwdTW( tPortHole.ghosts[ iRm ].rObj[ iObj ].tripWire[ iTW ] )
 						if _bFLAG and tPortHole.ghosts[ iRm ].rObj[ iObj ].MOVES 
 						and tPortHole.ghosts[ iRm ].rObj[ iObj ].sound ~= "" then		--PLAY SOUND OBJ IF IT EXISTS
